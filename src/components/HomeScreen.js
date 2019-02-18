@@ -1,6 +1,5 @@
 import React from 'react';
-import { Image, Text, View, ScrollView } from 'react-native';
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { Text, View, ScrollView } from 'react-native';
 
 class HomeScreen extends React.Component {
   constructor(props) {
