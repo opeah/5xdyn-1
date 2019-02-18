@@ -21,11 +21,11 @@ class SettingsScreen extends React.Component {
         <View style={styles.settingsContainer}>
           <ToggleSwitch
             isOn={this.state.darkMode}
-            onColor='green'
-            offColor='red'
+            onColor='#68e25d'
+            offColor='#dee2de'
             label='Dark Mode'
             labelStyle={{color: 'black', fontWeight: '900'}}
-            size='large'
+            size='medium'
             onToggle={() => this.setState({darkMode: !this.state.darkMode})}
           />
           <Text style={styles.settings}>
