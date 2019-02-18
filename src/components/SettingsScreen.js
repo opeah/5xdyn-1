@@ -1,14 +1,33 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import ToggleSwitch from 'toggle-switch-react-native';
+
 
 class SettingsScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      darkMode: true,
+    };
+  }
+
   render() {
+    console.log(this.state.darkMode);
     return (
       <View style={styles.container}>
 
         <Text style={styles.settingsTitle}>Settings</Text>
 
         <View style={styles.settingsContainer}>
+          <ToggleSwitch
+            isOn={this.state.darkMode}
+            onColor='green'
+            offColor='red'
+            label='Dark Mode'
+            labelStyle={{color: 'black', fontWeight: '900'}}
+            size='large'
+            onToggle={() => this.setState({darkMode: !this.state.darkMode})}
+          />
           <Text style={styles.settings}>
             <Text>Notifications</Text>
           </Text>
@@ -26,20 +45,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingTop:30
+    paddingTop: 30
   },
   settingsTitle: {
     fontSize: 30,
   },
   settingsContainer: {
     padding: 20,
-    backgroundColor:'lightgrey',
-    borderRadius:10,
+    backgroundColor: 'lightgrey',
+    borderRadius: 10,
     marginBottom: 160
   },
   settings: {
-    fontSize:30,
-    padding:20
+    fontSize: 30,
+    padding: 20
   }
 });
 export default SettingsScreen;
