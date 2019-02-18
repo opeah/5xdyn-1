@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, View, ScrollView } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
 class HomeScreen extends React.Component {
@@ -11,7 +11,7 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
-    let postsUrl = `https://www.googleapis.com/calendar/v3/calendars/ifosupwavre.be_8gvh4v3v8dae5ktb21hisci9h0@group.calendar.google.com/events?key=AIzaSyCTHMnkmKEU6cMQzd6I6qG9LKvttLPf70c`;
+    let postsUrl = `https://www.googleapis.com/calendar/v3/calendars/ifosupwavre.be_8gvh4v3v8dae5ktb21hisci9h0@group.calendar.google.com/events?key=AIzaSyCTHMnkmKEU6cMQzd6I6qG9LKvttLPf70c&singleEvents=true`;
     fetch(postsUrl)
       .then(response => response.json())
       .then(response => {
@@ -38,10 +38,10 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <ScrollView>
         <Text>Home!</Text>
         {this.renderEvents()}
-      </View>
+      </ScrollView>
     );
   }
 }
