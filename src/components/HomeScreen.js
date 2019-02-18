@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from "react-native";
+import {Image, Text, View} from "react-native";
 
 class HomeScreen extends React.Component {
   render() {
