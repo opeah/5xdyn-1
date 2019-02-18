@@ -13,8 +13,8 @@ class HomeScreen extends React.Component {
   componentDidMount() {
     let postsUrl = `https://www.googleapis.com/calendar/v3/calendars/ifosupwavre.be_8gvh4v3v8dae5ktb21hisci9h0@group.calendar.google.com/events?key=AIzaSyCTHMnkmKEU6cMQzd6I6qG9LKvttLPf70c`;
     fetch(postsUrl)
-      .then((response) => response.json())
-      .then((response) => {
+      .then(response => response.json())
+      .then(response => {
         this.setState({
           events: response,
         });
@@ -29,15 +29,14 @@ class HomeScreen extends React.Component {
       return (
         <View key={event.id}>
           <Text>{event.summary}</Text>
-          <Text>{event.start.date}</Text>
-          <Text>{event.end.date}</Text>
+          <Text>{event.start.date || event.start.dateTime}</Text>
+          <Text>{event.end.date || event.end.dateTime}</Text>
         </View>
       );
     });
   };
 
   render() {
-    console.log(this.state.events);
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Home!</Text>
