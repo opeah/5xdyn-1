@@ -6,12 +6,18 @@ export class ThemeProvider extends Component {
   state = {
     darkMode: false,
     light: {
-      foreground: `#000000`,
-      background: `#EEEEEE`,
+      foreground: `#222222`,
+      background: `#FFFFFF`,
+      navigationBar: {
+        borderColor: `#EEEEEE`,
+      },
     },
     dark: {
       foreground: `#FFFFFF`,
       background: `#222222`,
+      navigationBar: {
+        borderColor: `#333333`,
+      },
     },
   };
 

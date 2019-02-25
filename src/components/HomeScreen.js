@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, ScrollView, StyleSheet } from 'react-native';
+import NavigationBar from 'react-native-navbar';
 
 import { withThemeContext } from '../context/ThemeContext';
 
@@ -39,13 +40,50 @@ class HomeScreen extends React.Component {
   };
 
   render() {
+    const containerStyle = {
+      paddingTop: 20,
+      paddingBottom: 10,
+      borderBottomColor: `${this.props.ThemeProvider.themeStyle.navigationBar.borderColor}`,
+      borderBottomWidth: 1,
+      borderStyle: `solid`,
+    };
+
+    const titleConfig = {
+      title: `Calendrier`,
+      tintColor: `${this.props.ThemeProvider.themeStyle.foreground}`,
+      style: {
+        fontWeight: `900`,
+        fontSize: 24,
+        letterSpacing: 1,
+      },
+    };
+
     return (
-      <ScrollView style={[{ backgroundColor: `${this.props.ThemeProvider.themeStyle.background}` }]}>
-        <Text style={{ color: `${this.props.ThemeProvider.themeStyle.foreground}` }}>Home!</Text>
-        {this.renderEvents()}
-      </ScrollView>
+      <View>
+        <View>
+          <NavigationBar
+            title={titleConfig}
+            containerStyle={containerStyle}
+            tintColor={`${this.props.ThemeProvider.themeStyle.background}`}
+          />
+        </View>
+        <View>
+          <ScrollView style={[
+            styles.container,
+            { backgroundColor: `${this.props.ThemeProvider.themeStyle.background}` }]}>
+
+            {this.renderEvents()}
+          </ScrollView>
+        </View>
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+});
 
 export default withThemeContext(HomeScreen);
