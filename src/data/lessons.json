@@ -1,100 +1,104 @@
 {
-    "lessons":[
-        {
-            "title": "Création de sites web statiques",
-            "period": "160",
-            "credits": "16",
-            "professor": "Mme Vanassche"
-        },
-        {
-            "title":"Scripts serveurs",
-            "period": "120",
-            "credits": "11",
-            "professor": "M. Jacquet"
-        },
-        {
-            "title":"Bases des réseaux",
-            "period": "40",
-            "credits": "4",
-            "professor": "M. Vanconningsloo"
-        },
-        {
-            "title":"Initiation à la programmation",
-            "period": "40",
-            "credits": "4",
-            "professor": "M. Jacquet"
-        },
-        {
-            "title":"Environnement et technologies web",
-            "period": "40",
-            "credits": "4",
-            "professor": "Mme Vanassche"
-        },
-        {
-            "title":"CMS niveau 1",
-            "period": "40",
-            "credits": "4",
-            "professor": "M. Martin"
-        },
-        {
-            "title":"SGBD",
-            "period": "80",
-            "credits": "8",
-            "professor": "M. Jacquet"
-        },
-        {
-            "title":"Anglais en situation appliqué à l'enseignement supérieur UF2",
-            "period": "80",
-            "credits": "7",
-            "professor": "Mme Frasineanu"
-        },
-        {
-            "title":"Scripts clients",
-            "period": "120",
-            "credits": "11",
-            "professor": "M. Renard"
-        },
-        {
-            "title":"Approche design (E-learning)",
-            "period": "80",
-            "credits": "8",
-            "professor": "Mme Vanassche"
-        },
-        {
-            "title":"Projet web dynamique",
-            "period": "120",
-            "credits": "8",
-            "professor": "M. Renard"
-        },
-        {
-            "title":"Framework et POO côté serveur partie 1",
-            "period": "40",
-            "credits": "8",
-            "professor": "M. Jacquet"
-        },
-        {
-            "title":"Framework et POO côté serveur partie 2",
-            "period": "40",
-            "credits": "8",
-            "professor": "M. Renard"
-        },
-        {
-            "title":"Veille technologique",
-            "period": "40",
-            "credits": "4",
-            "professor": "M. Barmarin"
-        },
-        {
-            "title":"Stage",
-            "period": "240",
-            "credits": "",
-            "professor": "M. Martin"
-        },
-        {
-            "title":"Epreuve intégrée",
-            "period": "",
-            "credits": "",
-            "professor": "M. Jacquet/M. Renard"
-        }
-    ] 
+    "lessons":{
+        "Première":[
+            {
+                "title": "Création de sites web statiques",
+                "period": "160",
+                "credits": "16",
+                "professor": "Mme Vanassche"
+            },
+            {
+                "title":"Scripts serveurs",
+                "period": "120",
+                "credits": "11",
+                "professor": "M. Jacquet"
+            },
+            {
+                "title":"Bases des réseaux",
+                "period": "40",
+                "credits": "4",
+                "professor": "M. Vanconningsloo"
+            },
+            {
+                "title":"Initiation à la programmation",
+                "period": "40",
+                "credits": "4",
+                "professor": "M. Jacquet"
+            },
+            {
+                "title":"Environnement et technologies web",
+                "period": "40",
+                "credits": "4",
+                "professor": "Mme Vanassche"
+            },
+            {
+                "title":"CMS niveau 1",
+                "period": "40",
+                "credits": "4",
+                "professor": "M. Martin"
+            },
+            {
+                "title":"SGBD",
+                "period": "80",
+                "credits": "8",
+                "professor": "M. Jacquet"
+            },
+            {
+                "title":"Anglais en situation appliqué à l'enseignement supérieur UF2",
+                "period": "80",
+                "credits": "7",
+                "professor": "Mme Frasineanu"
+            }
+        ],
+        "second":[
+            {
+                "title":"Scripts clients",
+                "period": "120",
+                "credits": "11",
+                "professor": "M. Renard"
+            },
+            {
+                "title":"Approche design (E-learning)",
+                "period": "80",
+                "credits": "8",
+                "professor": "Mme Vanassche"
+            },
+            {
+                "title":"Projet web dynamique",
+                "period": "120",
+                "credits": "8",
+                "professor": "M. Renard"
+            },
+            {
+                "title":"Framework et POO côté serveur partie 1",
+                "period": "40",
+                "credits": "8",
+                "professor": "M. Jacquet"
+            },
+            {
+                "title":"Framework et POO côté serveur partie 2",
+                "period": "40",
+                "credits": "8",
+                "professor": "M. Renard"
+            },
+            {
+                "title":"Veille technologique",
+                "period": "40",
+                "credits": "4",
+                "professor": "M. Barmarin"
+            },
+            {
+                "title":"Stage",
+                "period": "240",
+                "credits": "",
+                "professor": "M. Martin"
+            },
+            {
+                "title":"Epreuve intégrée",
+                "period": "",
+                "credits": "",
+                "professor": "M. Jacquet/M. Renard"
+            }
+        ]
+    }
 }
