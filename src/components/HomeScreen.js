@@ -1,5 +1,7 @@
 import React from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, StyleSheet } from 'react-native';
+
+import { withThemeContext } from '../context/ThemeContext';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -25,11 +27,12 @@ class HomeScreen extends React.Component {
       return false;
     }
     return this.state.events.items.map(event => {
+      const style = { color: `${this.props.ThemeProvider.themeStyle.foreground}` };
       return (
-        <View key={event.id} style={{ marginBottom: 20 }}>
-          <Text>{event.summary}</Text>
-          <Text>{event.start.date || event.start.dateTime}</Text>
-          <Text>{event.end.date || event.end.dateTime}</Text>
+        <View key={event.id} style={[{ marginBottom: 20 }]}>
+          <Text style={style}>{event.summary}</Text>
+          <Text style={style}>{event.start.date || event.start.dateTime}</Text>
+          <Text style={style}>{event.end.date || event.end.dateTime}</Text>
         </View>
       );
     });
@@ -37,12 +40,12 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView>
-        <Text>Home!</Text>
+      <ScrollView style={[{ backgroundColor: `${this.props.ThemeProvider.themeStyle.background}` }]}>
+        <Text style={{ color: `${this.props.ThemeProvider.themeStyle.foreground}` }}>Home!</Text>
         {this.renderEvents()}
       </ScrollView>
     );
   }
 }
 
-export default HomeScreen;
+export default withThemeContext(HomeScreen);
