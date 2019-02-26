@@ -25,6 +25,7 @@ export class ThemeProvider extends Component {
         backgroundColor: `#333333`,
       },
     },
+    currentYear: `second`,
   };
 
   toggleDarkMode = () => {
@@ -33,10 +34,18 @@ export class ThemeProvider extends Component {
     });
   };
 
+  toggleYear = () => {
+    this.setState({
+      currentYear: this.state.currentYear === `second` ? `first` : `second`,
+    });
+  };
+
   getTheme = () => {
     return {
       themeStyle: this.state.darkMode ? this.state.dark : this.state.light,
       toggleDarkMode: this.toggleDarkMode,
+      currentYear: this.state.currentYear,
+      toggleYear: this.toggleYear,
     };
   };
 
