@@ -22,16 +22,18 @@ class LessonsScreen extends React.Component {
     }
     return this.state.lessons.lessons[this.props.ThemeProvider.currentYear].map((
       lesson, index) => {
+      const color = { color: `${this.props.ThemeProvider.themeStyle.foreground}` };
+      const background = { backgroundColor: `${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}` };
       return (
-        <View key={index}  style={{ ...styles.lessonItem, ...background }}>
-        <View>
-          <Text style={{ ...styles.lessonItem__title, color}}>{lesson.title}</Text>
-        </View>
-        <View style={{...styles.lessonItem__organized}}>
-          <Text style={{ ...styles.lessonItem__info, color}}>{lesson.period}</Text>
-          <Text style={{ ...styles.lessonItem__info, color}}>{lesson.credits}</Text>
-          <Text style={{ ...styles.lessonItem__info, color}}>{lesson.professor}</Text>
-        </View>
+        <View key={index} style={{ ...styles.lessonItem, ...background }}>
+          <View>
+            <Text style={{ ...styles.lessonItem__title, ...color }}>{lesson.title}</Text>
+          </View>
+          <View style={{ ...styles.lessonItem__organized }}>
+            <Text style={{ ...styles.lessonItem__info, ...color }}>{`${lesson.period} périodes`}</Text>
+            <Text style={{ ...styles.lessonItem__info, ...color }}>{`${lesson.credits} crédits`}</Text>
+            <Text style={{ ...styles.lessonItem__info, ...color }}>{lesson.professor}</Text>
+          </View>
         </View>
       );
     });

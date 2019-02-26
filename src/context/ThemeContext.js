@@ -45,9 +45,9 @@ export class ThemeProvider extends Component {
     });
   };
 
-  toggleYear = () => {
+  toggleYear = value => {
     this.setState({
-      currentYear: this.state.currentYear === `second` ? `first` : `second`,
+      currentYear: value,
     });
   };
 
