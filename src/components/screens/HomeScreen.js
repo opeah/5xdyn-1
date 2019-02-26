@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, View, ScrollView, StyleSheet } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, StatusBar } from 'react-native';
 import Moment from 'moment';
 
 import { withThemeContext } from '../../context/ThemeContext';
 import TopBar from '../layout/TopBar';
 
-Moment.locale('fr', {
-  months: 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split('_'),
+Moment.locale(`fr`, {
+  months: 'Janvier_Février_Mars_Avril_Mai_Juin_Juillet_Août_Septembre_Octobre_Novembre_Décembre'.split('_'),
   monthsShort: 'jan_fév_mar_avr_mai_jui_jui_aoû_sep_oct_nov_déc'.split('_'),
   monthsParseExact: true,
   weekdays: 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
@@ -79,15 +79,20 @@ class HomeScreen extends React.Component {
         const start = event.start.date || event.start.dateTime;
         const year = Moment(start)
           .format(`YYYY`);
-        const month = Moment(start)
+        const number = Moment(start)
           .format('M');
+        const month = Moment(start)
+          .format('MMMM');
         if (sortedEvents[year] === undefined) {
           sortedEvents[year] = {};
         }
-        if (sortedEvents[year][month] === undefined) {
-          sortedEvents[year][month] = [];
+        if (sortedEvents[year][number] === undefined) {
+          sortedEvents[year][number] = {
+            month,
+            events: [],
+          };
         }
-        sortedEvents[year][month].push(event);
+        sortedEvents[year][number].events.push(event);
       });
     }
     this.setState({ sortedEvents });
@@ -111,20 +116,20 @@ class HomeScreen extends React.Component {
     return Object.keys(this.state.sortedEvents)
       .map(year => {
         return (
-          <View>
-            <Text key={year} style={{
+          <View key={year}>
+            <Text style={{
               ...styles.eventsList__year,
               color: this.props.ThemeProvider.themeStyle.foreground,
             }}>{year}</Text>
             {Object.keys(this.state.sortedEvents[year])
-              .map((month, index) => {
+              .map((number, index) => {
                 return (
-                  <View>
-                    <Text key={index} style={{
+                  <View key={index}>
+                    <Text style={{
                       ...styles.eventsList__month,
                       color: this.props.ThemeProvider.themeStyle.foreground,
-                    }}>{month}</Text>
-                    {this.state.sortedEvents[year][month].map(event => {
+                    }}>{this.state.sortedEvents[year][number].month}</Text>
+                    {this.state.sortedEvents[year][number].events.map(event => {
                       const color = { color: `${this.props.ThemeProvider.themeStyle.foreground}` };
                       const background = { backgroundColor: `${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}` };
                       const day = Moment(event.start.date || event.start.dateTime)
@@ -165,13 +170,16 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <View>
-        <TopBar title="Calendrier" />
+      <View style={{
+        height: `100%`,
+        backgroundColor: `${this.props.ThemeProvider.themeStyle.background}`,
+      }}>
         <View>
-          <ScrollView style={[
-            styles.container,
-            { backgroundColor: `${this.props.ThemeProvider.themeStyle.background}` }]}
-          >
+          <StatusBar barStyle="light-content" />
+        </View>
+        <TopBar title="Calendrier" />
+        <View style={{ height: `100%` }}>
+          <ScrollView style={styles.eventsList}>
             {this.renderEvents()}
           </ScrollView>
         </View>
@@ -181,8 +189,9 @@ class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  eventsList: {
     padding: 20,
+    marginBottom: 100,
   },
   eventsList__year: {
     fontSize: 20,
@@ -190,7 +199,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   eventsList__month: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: `800`,
     marginBottom: 10,
   },
