@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, ScrollView, StyleSheet, StatusBar } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, StatusBar, SectionList } from 'react-native';
+import { SafeAreaView } from 'react-navigation';
 import Moment from 'moment';
 
 import { withThemeContext } from '../../context/ThemeContext';
@@ -67,6 +68,15 @@ Moment.locale(`fr`, {
 });
 
 class HomeScreen extends React.Component {
+  static navigationOptions = {
+    tabBarOptions: {
+      showLabel: true,
+      style: {
+        backgroundColor: `red`,
+      },
+    },
+  };
+
   state = {
     events: null,
     sortedEvents: null,
@@ -170,20 +180,18 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <View style={{
+      <SafeAreaView style={{
         height: `100%`,
         backgroundColor: `${this.props.ThemeProvider.themeStyle.background}`,
       }}>
-        <View>
-          <StatusBar barStyle="light-content" />
-        </View>
         <TopBar title="Calendrier" />
+        <StatusBar barStyle="light-content" />
         <View style={{ height: `100%` }}>
           <ScrollView style={styles.eventsList}>
             {this.renderEvents()}
           </ScrollView>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -191,7 +199,6 @@ class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   eventsList: {
     padding: 20,
-    marginBottom: 100,
   },
   eventsList__year: {
     fontSize: 20,

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-navigation';
 
 import { withThemeContext } from '../../context/ThemeContext';
 import TopBar from '../layout/TopBar';
@@ -39,17 +40,19 @@ class LessonsScreen extends React.Component {
 
   render() {
     return (
-      <View style={{ height: `100%` }}>
+      <SafeAreaView style={{
+        height: `100%`,
+        backgroundColor: `${this.props.ThemeProvider.themeStyle.background}`,
+      }}>
         <TopBar title="Cours" />
         <View style={{ height: `100%` }}>
           <ScrollView style={{
             ...styles.lessonsList,
-            backgroundColor: `${this.props.ThemeProvider.themeStyle.background}`,
           }}>
             {this.renderLessons()}
           </ScrollView>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

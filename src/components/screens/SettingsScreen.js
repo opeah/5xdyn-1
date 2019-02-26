@@ -1,17 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, Switch } from 'react-native';
+import { SafeAreaView } from 'react-navigation';
+
 import { withThemeContext } from '../../context/ThemeContext';
 import { storage } from '../../storage/Storage';
 import TopBar from '../layout/TopBar';
 
 class SettingsScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      darkMode: false,
-      notifications: false,
-    };
-  }
+  state = {
+    darkMode: false,
+    notifications: false,
+  };
 
   componentDidMount() {
     this.setState({
@@ -33,11 +32,13 @@ class SettingsScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <SafeAreaView style={{
+        height: `100%`,
+        backgroundColor: `${this.props.ThemeProvider.themeStyle.background}`,
+      }}>
         <TopBar title="Réglages" />
         <View style={{
           ...styles.container,
-          backgroundColor: this.props.ThemeProvider.themeStyle.background,
         }}>
           <View style={styles.settings}>
             <Text style={[
@@ -64,7 +65,7 @@ class SettingsScreen extends React.Component {
             />
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
