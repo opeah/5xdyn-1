@@ -4,7 +4,7 @@ import Moment from 'moment';
 
 Moment.locale('fr', {
   months: 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split('_'),
-  monthsShort: 'janv_févr_mars_avr_mai_juin_juil_août_sept_oct_nov_déc'.split('_'),
+  monthsShort: 'jan_fév_mar_avr_mai_jui_jui_aoû_sep_oct_nov_déc'.split('_'),
   monthsParseExact: true,
   weekdays: 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
   weekdaysShort: 'dim._lun._mar._mer._jeu._ven._sam.'.split('_'),
@@ -90,20 +90,32 @@ class HomeScreen extends React.Component {
       return false;
     }
     return this.state.events.items.map(event => {
-      const style = { color: `${this.props.ThemeProvider.themeStyle.foreground}` };
+      const color = { color: `${this.props.ThemeProvider.themeStyle.foreground}` };
+      const background = { backgroundColor: `${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}` };
       const day = Moment(event.start.date || event.start.dateTime)
         .format(`DD`);
       const month = Moment(event.start.date || event.start.dateTime)
         .format(`MMM`);
+      const begin = Moment(event.start.date || event.start.dateTime)
+        .format(`HH:mm`);
+      const end = Moment(event.end.date || event.end.dateTime)
+        .format(`HH:mm`);
       return (
-        <View key={event.id} style={{ ...styles.eventsItem }}>
+        <View key={event.id} style={{ ...styles.eventsItem, ...background }}>
           <View style={{ ...styles.eventsItem__left }}>
-            <Text style={{ ...styles.eventsItem__day }}>{day}</Text>
-            <Text style={{ ...styles.eventsItem__month }}>{month}</Text>
+            <Text style={{ ...styles.eventsItem__day, ...color }}>{day}</Text>
+            <Text style={{ ...styles.eventsItem__month, ...color }}>{month}</Text>
           </View>
           <View style={{ ...styles.eventsItem__right }}>
-            <Text style={{ ...style }}>{event.summary}</Text>
-            <Text style={style}>{event.end.date || event.end.dateTime}</Text>
+            <Text style={{ ...styles.eventsItem__title, ...color }}>{event.summary}</Text>
+            <View style={{ ...styles.eventsItem__hour }}>
+              <Text style={{ ...styles.eventsItem__begin, ...color }}>
+                {begin === `00:00` ? `Toute la journée` : `${begin} -`}
+              </Text>
+              <Text style={{ ...styles.eventsItem__end, ...color }}>
+                {begin === `00:00` ? `` : ` ${end}`}
+              </Text>
+            </View>
           </View>
         </View>
       );
@@ -134,10 +146,9 @@ const styles = StyleSheet.create({
   eventsItem: {
     flex: 1,
     flexDirection: `row`,
-    backgroundColor: `#F7F8FC`,
-    marginBottom: 20,
+    marginBottom: 15,
     padding: 20,
-    borderRadius: 3,
+    borderRadius: 5,
   },
   eventsItem__left: {
     width: `20%`,
@@ -152,6 +163,21 @@ const styles = StyleSheet.create({
   eventsItem__month: {
     fontSize: 14,
     fontWeight: `500`,
+  },
+  eventsItem__title: {
+    fontSize: 16,
+    fontWeight: `800`,
+    marginBottom: 5,
+  },
+  eventsItem__hour: {
+    flex: 1,
+    flexDirection: `row`,
+  },
+  eventsItem__begin: {
+    fontSize: 12,
+  },
+  eventsItem__end: {
+    fontSize: 12,
   },
 });
 

@@ -11,12 +11,18 @@ export class ThemeProvider extends Component {
       navigationBar: {
         borderColor: `#EEEEEE`,
       },
+      eventsList: {
+        backgroundColor: `#F7F8FC`,
+      },
     },
     dark: {
       foreground: `#FFFFFF`,
       background: `#222222`,
       navigationBar: {
         borderColor: `#333333`,
+      },
+      eventsList: {
+        backgroundColor: `#333333`,
       },
     },
   };
