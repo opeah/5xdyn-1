@@ -26,6 +26,9 @@ class ProfileScreen extends React.Component {
         <View key={index} style={[{ marginBottom: 20 }]}>
           <Text>
             {lesson.title}
+            {lesson.period}
+            {lesson.credits}
+            {lesson.professor}
           </Text>
         </View>
       );
@@ -36,10 +39,22 @@ class ProfileScreen extends React.Component {
     return (
       <View>
         <TopBar title="Liste des cours" />
+      <View>
+      <ScrollView style={[
+        styles.container,
+        { backgroundColor: `${this.props.ThemeProvider.themeStyle.background}` }]}
+      >
         {this.renderLessons()}
+      </ScrollView>
+      </View>
       </View>
     );
   }
 }
 
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+});
 export default withThemeContext(ProfileScreen);
