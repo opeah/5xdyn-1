@@ -1,20 +1,36 @@
 import React from 'react';
 import {View, Text, StyleSheet, Switch} from 'react-native';
-
 import {withThemeContext} from '../context/ThemeContext';
+import {storage} from './Storage';
+
 
 class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       darkMode: false,
+      notifications: false
     };
   }
 
+  componentDidMount() {
+    this.setState({
+      darkMode: this.props.ThemeProvider.darkMode
+    })
+  }
+
   toggleDarkMode = () => {
-    this.setState({darkMode: !this.state.darkMode});
+    this.setState({darkMode: !this.state.darkMode}, () => {
+      storage.save({
+        key: `theme`,
+        data: {
+          theme: this.state.darkMode,
+        }
+      });
+    });
     this.props.ThemeProvider.toggleDarkMode();
   };
+
 
   render() {
     return (
@@ -27,20 +43,28 @@ class SettingsScreen extends React.Component {
           {color: `${this.props.ThemeProvider.themeStyle.foreground}`}]}>Settings</Text>
 
         <View style={styles.settingsContainer}>
+
           <View style={styles.settings}>
-            <Text style={styles.textSettings}>Mode nuit</Text>
-            <Text>
-              <Switch
-                value={this.state.darkMode}
-                onValueChange={() => this.toggleDarkMode()}
-              />
+            <Text style={[styles.textSettings, {color: `${this.props.ThemeProvider.themeStyle.foreground}`}]}>
+              Mode nuit
             </Text>
+            <Switch
+              value={this.state.darkMode}
+              onValueChange={() => {
+                this.toggleDarkMode();
+              }}
+            />
           </View>
 
-          <Text>
-            <Text>Notifications</Text>
-
-          </Text>
+          <View style={styles.settings}>
+            <Text
+              style={[styles.textSettings, {color: `${this.props.ThemeProvider.themeStyle.foreground}`}]}>Notifications</Text>
+            <Switch
+              value={this.state.notifications}
+              onValueChange={() => {
+              }}
+            />
+          </View>
 
         </View>
       </View>
@@ -53,7 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingTop: 30,
+    paddingTop: 30
   },
   settingsTitle: {
     fontSize: 30,
@@ -68,12 +92,12 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     flexDirection: 'row',
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
   textSettings: {
     fontSize: 25,
     paddingBottom: 7,
-    paddingRight: 150
+    paddingRight: 150,
   }
 });
 

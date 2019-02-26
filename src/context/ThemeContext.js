@@ -1,4 +1,5 @@
-import React, { Component, createContext } from 'react';
+import React, {Component, createContext} from 'react';
+import {storage} from "../components/Storage";
 
 export const ThemeContext = createContext();
 
@@ -28,6 +29,14 @@ export class ThemeProvider extends Component {
     currentYear: `second`,
   };
 
+  componentDidMount() {
+    storage.load({
+      key: `theme`,
+    }).then(({theme}) => this.setState({
+      darkMode: theme,
+    }));
+  }
+
   toggleDarkMode = () => {
     this.setState({
       darkMode: !this.state.darkMode,
@@ -42,6 +51,7 @@ export class ThemeProvider extends Component {
 
   getTheme = () => {
     return {
+      darkMode: this.state.darkMode,
       themeStyle: this.state.darkMode ? this.state.dark : this.state.light,
       toggleDarkMode: this.toggleDarkMode,
       currentYear: this.state.currentYear,
@@ -63,7 +73,7 @@ export function withThemeContext(Component) {
     render() {
       return (
         <ThemeContext.Consumer>
-          {value => <Component {...this.props} ThemeProvider={value} />}
+          {value => <Component {...this.props} ThemeProvider={value}/>}
         </ThemeContext.Consumer>
       );
     }
