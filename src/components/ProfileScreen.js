@@ -1,40 +1,32 @@
 import React from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { withThemeContext } from '../context/ThemeContext';
 import TopBar from './layout/TopBar';
-//import dataLessons from '../data/lessons.json';
+import lessons from '../data/lessons';
 
 class ProfileScreen extends React.Component {
+  state = {
+    lessons: null,
+  };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      lessons: null,
-    };
-  }
-
-  componentDidMount () {
-    let dataCursus = `../data/lessons.json`;
-    fetch(dataCursus)
-      .then()
-
+  componentDidMount() {
+    this.setState({
+      lessons,
+    });
   }
 
   renderLessons = () => {
     if (this.state.lessons === null) {
       return false;
     }
-    return this.state.lessons.items.map(lesson => {
-      const style = { color: `${this.props.ThemeProvider.themeStyle.foreground}` };
-      const data = dataLessons
+    return this.state.lessons.lessons[this.props.ThemeProvider.currentYear].map((
+      lesson, index) => {
       return (
-        <View key={lesson.id} style={[{ marginBottom: 20 }]}>
-          <Text style={style}>{data.first || data.second}</Text>
-          <Text style={style}>{data.first.title || data.second.title}</Text>
-          <Text style={style}>{data.first.period || data.second.period}</Text>
-          <Text style={style}>{data.first.credits || data.second.credits}</Text>
-          <Text style={style}>{data.first.professor || data.second.professor}</Text>
+        <View key={index} style={[{ marginBottom: 20 }]}>
+          <Text>
+            {lesson.title}
+          </Text>
         </View>
       );
     });
@@ -43,17 +35,8 @@ class ProfileScreen extends React.Component {
   render() {
     return (
       <View>
-        <View>
-          <TopBar title="Profile" />
-        </View>
-        <ScrollView style={[
-            styles.container,
-            { backgroundColor: `${this.props.ThemeProvider.themeStyle.background}` }]}
-          >
-            {this.renderLessons()}
-          </ScrollView>
-        <View >
-        </View>
+        <TopBar title="Liste des cours" />
+        {this.renderLessons()}
       </View>
     );
   }
