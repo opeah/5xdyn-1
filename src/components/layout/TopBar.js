@@ -1,29 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import NavigationBar from 'react-native-navbar';
+import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
 
 import { withThemeContext } from '../../context/ThemeContext';
 
 const TopBar = ({ title, ThemeProvider }) => {
-  const containerStyle = {
-    paddingTop: 0,
-    paddingBottom: 10,
-    borderBottomColor: `${ThemeProvider.themeStyle.navigationBar.borderColor}`,
-    borderBottomWidth: 1,
-    borderStyle: `solid`,
-  };
-
-  const titleConfig = {
-    title,
-    tintColor: `${ThemeProvider.themeStyle.foreground}`,
-    style: {
-      fontWeight: `900`,
-      fontSize: 24,
-      letterSpacing: 1,
-    },
-  };
-
   return (
     <View style={
       {
@@ -32,6 +13,7 @@ const TopBar = ({ title, ThemeProvider }) => {
         borderBottomColor: `${ThemeProvider.themeStyle.navigationBar.borderColor}`,
       }
     }>
+      <StatusBar barStyle={ThemeProvider.darkMode ? `light-content` : `dark-content`} />
       <Text style={{
         ...styles.topBar__title,
         color: `${ThemeProvider.themeStyle.foreground}`,

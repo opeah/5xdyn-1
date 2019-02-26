@@ -13,7 +13,7 @@ const TabNavigator = createBottomTabNavigator({
         tabBarIcon: ({ focused, horizontal, tintColor }) => {
           let IconComponent = Ionicons;
           const iconName = `ios-calendar`;
-          return <IconComponent name={iconName} size={40} color={tintColor} />;
+          return <IconComponent name={iconName} size={36} color={tintColor} />;
         },
       },
     },
@@ -23,7 +23,7 @@ const TabNavigator = createBottomTabNavigator({
         tabBarIcon: ({ focused, horizontal, tintColor }) => {
           let IconComponent = Ionicons;
           const iconName = `ios-list`;
-          return <IconComponent name={iconName} size={40} color={tintColor} />;
+          return <IconComponent name={iconName} size={36} color={tintColor} />;
         },
       },
     },
@@ -33,7 +33,7 @@ const TabNavigator = createBottomTabNavigator({
         tabBarIcon: ({ focused, horizontal, tintColor }) => {
           let IconComponent = Ionicons;
           const iconName = `ios-cog`;
-          return <IconComponent name={iconName} size={40} color={tintColor} />;
+          return <IconComponent name={iconName} size={36} color={tintColor} />;
         },
       },
     },

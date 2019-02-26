@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ScrollView, StyleSheet, StatusBar, SectionList } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Moment from 'moment';
 
@@ -185,7 +185,6 @@ class HomeScreen extends React.Component {
         backgroundColor: `${this.props.ThemeProvider.themeStyle.background}`,
       }}>
         <TopBar title="Calendrier" />
-        <StatusBar barStyle="light-content" />
         <View style={{ height: `100%` }}>
           <ScrollView style={styles.eventsList}>
             {this.renderEvents()}
