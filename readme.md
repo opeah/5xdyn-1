@@ -5,6 +5,9 @@ This is our first mobile app project built with React Native
 ### Requirements
 
 - Yarn or NPM
+- Xcode (only on macOS)
+- Android Studio
+- expo cli
 
 ### Specifications
 
