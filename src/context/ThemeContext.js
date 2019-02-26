@@ -1,5 +1,6 @@
-import React, {Component, createContext} from 'react';
-import {storage} from "../components/Storage";
+import React, { Component, createContext } from 'react';
+
+import { storage } from '../storage/Storage';
 
 export const ThemeContext = createContext();
 
@@ -32,9 +33,10 @@ export class ThemeProvider extends Component {
   componentDidMount() {
     storage.load({
       key: `theme`,
-    }).then(({theme}) => this.setState({
-      darkMode: theme,
-    }));
+    })
+      .then(({ theme }) => this.setState({
+        darkMode: theme,
+      }));
   }
 
   toggleDarkMode = () => {
@@ -73,7 +75,7 @@ export function withThemeContext(Component) {
     render() {
       return (
         <ThemeContext.Consumer>
-          {value => <Component {...this.props} ThemeProvider={value}/>}
+          {value => <Component {...this.props} ThemeProvider={value} />}
         </ThemeContext.Consumer>
       );
     }

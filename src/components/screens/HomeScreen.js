@@ -2,6 +2,9 @@ import React from 'react';
 import { Text, View, ScrollView, StyleSheet } from 'react-native';
 import Moment from 'moment';
 
+import { withThemeContext } from '../../context/ThemeContext';
+import TopBar from '../layout/TopBar';
+
 Moment.locale('fr', {
   months: 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split('_'),
   monthsShort: 'jan_fév_mar_avr_mai_jui_jui_aoû_sep_oct_nov_déc'.split('_'),
@@ -62,9 +65,6 @@ Moment.locale('fr', {
     doy: 4,  // Used to determine first week of the year.
   },
 });
-
-import { withThemeContext } from '../context/ThemeContext';
-import TopBar from './layout/TopBar';
 
 class HomeScreen extends React.Component {
   constructor(props) {

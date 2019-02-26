@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 
-import { withThemeContext } from '../context/ThemeContext';
-import TopBar from './layout/TopBar';
-import lessons from '../data/lessons';
+import { withThemeContext } from '../../context/ThemeContext';
+import TopBar from '../layout/TopBar';
+import lessons from '../../data/lessons';
 
-class ProfileScreen extends React.Component {
+class LessonsScreen extends React.Component {
   state = {
     lessons: null,
   };
@@ -39,14 +39,14 @@ class ProfileScreen extends React.Component {
     return (
       <View>
         <TopBar title="Liste des cours" />
-      <View>
-      <ScrollView style={[
-        styles.container,
-        { backgroundColor: `${this.props.ThemeProvider.themeStyle.background}` }]}
-      >
-        {this.renderLessons()}
-      </ScrollView>
-      </View>
+        <View>
+          <ScrollView style={[
+            styles.container,
+            { backgroundColor: `${this.props.ThemeProvider.themeStyle.background}` }]}
+          >
+            {this.renderLessons()}
+          </ScrollView>
+        </View>
       </View>
     );
   }
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 });
-export default withThemeContext(ProfileScreen);
+export default withThemeContext(LessonsScreen);

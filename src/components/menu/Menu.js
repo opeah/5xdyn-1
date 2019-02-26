@@ -1,10 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator, createAppContainer, navigation } from 'react-navigation';
 
-import HomeScreen from '../../src/components/HomeScreen';
-import ProfileScreen from '../../src/components/ProfileScreen';
-import SettingsScreen from '../../src/components/SettingsScreen';
-import IconTabBottom from '../../src/components/IconTabBottom';
+import HomeScreen from '../screens/HomeScreen';
+import LessonsScreen from '../screens/LessonsScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+import IconTabBottom from './IconTabBottom';
 
 const TabNavigator = createBottomTabNavigator({
     Home: {
@@ -16,7 +16,7 @@ const TabNavigator = createBottomTabNavigator({
       },
     },
     Profile: {
-      screen: ProfileScreen,
+      screen: LessonsScreen,
       navigationOptions: {
         tabBarIcon: ({}) => (
           <IconTabBottom src={require('../../assets/images/profile.png')} />
