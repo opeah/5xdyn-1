@@ -25,15 +25,13 @@ class LessonsScreen extends React.Component {
       const color = { color: `${this.props.ThemeProvider.themeStyle.foreground}` };
       const background = { backgroundColor: `${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}` };
       return (
-        <View key={index} style={{ ...styles.lessonItem, ...background }}>
-          <View>
-            <Text style={{ ...styles.lessonItem__title, ...color }}>{lesson.title}</Text>
-          </View>
-          <View style={{ ...styles.lessonItem__organized }}>
-            <Text style={{ ...styles.lessonItem__info, ...color }}>{`${lesson.period} périodes`}</Text>
-            <Text style={{ ...styles.lessonItem__info, ...color }}>{`${lesson.credits} crédits`}</Text>
-            <Text style={{ ...styles.lessonItem__info, ...color }}>{lesson.professor}</Text>
-          </View>
+        <View key={index} style={{ ...styles.lessonsItem, ...background }}>
+          <Text style={{ ...styles.lessonItem__title, ...color }}>{lesson.title}</Text>
+          <Text
+            style={{ ...styles.lessonItem__info, ...color }}
+          >
+            {`${lesson.period} périodes - ${lesson.credits} crédits - ${lesson.professor}`}
+          </Text>
         </View>
       );
     });
@@ -41,13 +39,13 @@ class LessonsScreen extends React.Component {
 
   render() {
     return (
-      <View>
-        <TopBar title="Liste des cours" />
-        <View>
-          <ScrollView style={[
-            styles.container,
-            { backgroundColor: `${this.props.ThemeProvider.themeStyle.background}` }]}
-          >
+      <View style={{ height: `100%` }}>
+        <TopBar title="Cours" />
+        <View style={{ height: `100%` }}>
+          <ScrollView style={{
+            ...styles.lessonsList,
+            backgroundColor: `${this.props.ThemeProvider.themeStyle.background}`,
+          }}>
             {this.renderLessons()}
           </ScrollView>
         </View>
@@ -57,20 +55,18 @@ class LessonsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  lessonsList: {
     padding: 20,
     height: `100%`,
   },
-  lessonItem: {
-    flex: 1,
-    flexDirection: `row`,
+  lessonsItem: {
     marginBottom: 15,
     padding: 20,
     borderRadius: 5,
-    width: `90%`,
   },
+  lessonsItem__content: {},
   lessonItem__title: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: `800`,
     marginBottom: 5,
   },
