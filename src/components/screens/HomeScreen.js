@@ -194,12 +194,12 @@ const styles = StyleSheet.create({
   eventsList__year: {
     fontSize: 20,
     fontWeight: `800`,
-    marginBottom: 10,
   },
   eventsList__month: {
     fontSize: 16,
     fontWeight: `800`,
     marginBottom: 10,
+    marginTop: 10,
   },
   eventsItem: {
     flex: 1,
