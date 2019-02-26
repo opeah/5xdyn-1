@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.13.0/libexec/bin/yarn.js add react-native-calendars
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.13.0/libexec/bin/yarn.js add moment-with-locales
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -8,13 +8,23 @@ Yarn version:
   1.13.0
 
 Node version: 
-  10.10.0
+  11.10.0
 
 Platform: 
   darwin x64
 
 Trace: 
-  Error: EACCES: permission denied, open '/Users/sebastiencrepin/Data/School/5XDYN-1/yarn.lock'
+  Error: https://registry.npmjs.org/moment-with-locales: Not found
+      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.13.0/libexec/lib/cli.js:66255:18)
+      at Request.self.callback (/usr/local/Cellar/yarn/1.13.0/libexec/lib/cli.js:129397:22)
+      at Request.emit (events.js:197:13)
+      at Request.<anonymous> (/usr/local/Cellar/yarn/1.13.0/libexec/lib/cli.js:130369:10)
+      at Request.emit (events.js:197:13)
+      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.13.0/libexec/lib/cli.js:130291:12)
+      at Object.onceWrapper (events.js:285:13)
+      at IncomingMessage.emit (events.js:202:15)
+      at endReadableNT (_stream_readable.js:1129:12)
+      at processTicksAndRejections (internal/process/next_tick.js:76:17)
 
 npm manifest: 
   {
@@ -27,8 +37,12 @@ npm manifest:
     },
     "dependencies": {
       "expo": "^32.0.0",
+      "moment": "^2.24.0",
+      "prop-types": "^15.7.2",
       "react": "16.5.0",
       "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+      "react-native-calendars": "^1.22.0",
+      "react-native-navbar": "^2.1.0",
       "react-native-navigation": "^2.11.0",
       "react-native-svg": "^9.2.4",
       "react-native-vector-icons": "^6.3.0",
@@ -3414,6 +3428,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
     integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
   
+  lodash.isequal@^4.5.0:
+    version "4.5.0"
+    resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+    integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+  
   lodash.map@^4.6.0:
     version "4.6.0"
     resolved "https://registry.yarnpkg.com/lodash.map/-/lodash.map-4.6.0.tgz#771ec7839e3473d9c4cde28b19394c3562f4f6d3"
@@ -3923,7 +3942,7 @@ Lockfile:
     dependencies:
       moment ">= 2.9.0"
   
-  "moment@>= 2.9.0", moment@^2.22.2:
+  "moment@>= 2.9.0", moment@^2.22.2, moment@^2.24.0:
     version "2.24.0"
     resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
     integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
@@ -4446,7 +4465,7 @@ Lockfile:
     dependencies:
       asap "~2.0.3"
   
-  prop-types@15.x.x, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+  prop-types@15.x.x, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
     version "15.7.2"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
     integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4540,6 +4559,16 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.2.5.tgz#4074dd63b4973e6397d9ce50e97b57c77a518e9d"
     integrity sha1-QHTdY7SXPmOX2c5Q6XtXx3pRjp0=
   
+  react-native-calendars@^1.22.0:
+    version "1.22.0"
+    resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.22.0.tgz#873836dc7faa70dbf870da08944661370a0e5fae"
+    integrity sha512-7blT6v8mU8bRC1JqnDTnnHNlTmqQfa5FXWOkKSd6mtdF+EgrV+WyM1iHQzzwyjHYJlLKMqQALdCA+xqvK6lG9w==
+    dependencies:
+      lodash.get "^4.4.2"
+      lodash.isequal "^4.5.0"
+      prop-types "^15.5.10"
+      xdate "^0.8.0"
+  
   react-native-gesture-handler@~1.0.14:
     version "1.0.15"
     resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.0.15.tgz#7e0d0a457820a3c9325a3d492daaed14400508a6"
@@ -4549,14 +4578,16 @@ Lockfile:
       invariant "^2.2.2"
       prop-types "^15.5.10"
   
-  react-native-google-signin@^1.1.0:
-    version "1.1.0"
-    resolved "https://registry.yarnpkg.com/react-native-google-signin/-/react-native-google-signin-1.1.0.tgz#173d981c937f3262b5d0804d989593e4fd29da0d"
-    integrity sha512-X+Ox0PZoIG/IFGOz6ZI8v1hVt47nSBUtlRcmekwFJCDgkjZB3fvif/ZVad9JvPqN17jBqxZLjihsYj9DylGsHw==
-  
-  "react-native-maps@github:expo/react-native-maps#v0.22.1-exp.0":
+  react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
     version "0.22.1"
     resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
+  
+  react-native-navbar@^2.1.0:
+    version "2.1.0"
+    resolved "https://registry.yarnpkg.com/react-native-navbar/-/react-native-navbar-2.1.0.tgz#4f21e947501ce5cf4563a29914cb3192db35a647"
+    integrity sha512-hvETP5lgBbokmTHNMuHdlG6LRqDyXGJb8eiTuxmZ0RSHTsDbGBkxrSBdS9PIA+dizej8Ql9tBQFf6e0QDNG/WA==
+    dependencies:
+      prop-types "^15.5.10"
   
   react-native-navigation@^2.11.0:
     version "2.12.0"
@@ -5728,6 +5759,11 @@ Lockfile:
       pegjs "^0.10.0"
       simple-plist "^0.2.1"
       uuid "3.0.1"
+  
+  xdate@^0.8.0:
+    version "0.8.2"
+    resolved "https://registry.yarnpkg.com/xdate/-/xdate-0.8.2.tgz#d7b033c00485d02695baf0044f4eacda3fc961a3"
+    integrity sha1-17AzwASF0CaVuvAET06s2j/JYaM=
   
   xmlbuilder@8.2.2:
     version "8.2.2"
