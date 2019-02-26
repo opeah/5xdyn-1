@@ -23,13 +23,15 @@ class LessonsScreen extends React.Component {
     return this.state.lessons.lessons[this.props.ThemeProvider.currentYear].map((
       lesson, index) => {
       return (
-        <View key={index} style={[{ marginBottom: 20 }]}>
-          <Text>
-            {lesson.title}
-            {lesson.period}
-            {lesson.credits}
-            {lesson.professor}
-          </Text>
+        <View key={index}  style={{ ...styles.lessonItem, ...background }}>
+        <View>
+          <Text style={{ ...styles.lessonItem__title, color}}>{lesson.title}</Text>
+        </View>
+        <View style={{...styles.lessonItem__organized}}>
+          <Text style={{ ...styles.lessonItem__info, color}}>{lesson.period}</Text>
+          <Text style={{ ...styles.lessonItem__info, color}}>{lesson.credits}</Text>
+          <Text style={{ ...styles.lessonItem__info, color}}>{lesson.professor}</Text>
+        </View>
         </View>
       );
     });
@@ -55,6 +57,29 @@ class LessonsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    height: `100%`,
+  },
+  lessonItem: {
+    flex: 1,
+    flexDirection: `row`,
+    marginBottom: 15,
+    padding: 20,
+    borderRadius: 5,
+    width: `90%`,
+  },
+  lessonItem__title: {
+    fontSize: 16,
+    fontWeight: `800`,
+    marginBottom: 5,
+  },
+  lessonItem__info: {
+    fontSize: 12,
+    fontWeight: `600`,
+    marginBottom: 5,
+  },
+  lessonItem__organized: {
+    flex: 1,
+    flexDirection: `column`,
   },
 });
 export default withThemeContext(LessonsScreen);
