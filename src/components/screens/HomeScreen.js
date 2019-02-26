@@ -68,15 +68,6 @@ Moment.locale(`fr`, {
 });
 
 class HomeScreen extends React.Component {
-  static navigationOptions = {
-    tabBarOptions: {
-      showLabel: true,
-      style: {
-        backgroundColor: `red`,
-      },
-    },
-  };
-
   state = {
     events: null,
     sortedEvents: null,
@@ -198,6 +189,7 @@ class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   eventsList: {
     padding: 20,
+    marginBottom: 20,
   },
   eventsList__year: {
     fontSize: 20,
