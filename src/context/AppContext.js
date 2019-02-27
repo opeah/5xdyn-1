@@ -43,6 +43,13 @@ export class Store extends Component {
 
   componentDidMount() {
     storage
+      .load({ key: `currentYear` })
+      .then(({ currentYear }) => {
+        this.setState({ currentYear });
+        this.fetchEvents();
+      })
+      .catch(() => this.setState({ currentYear: `first` }));
+    storage
       .load({ key: `theme` })
       .then(({ theme }) => this.setState({ darkMode: theme }))
       .catch(() => this.setState({ darkMode: false }));
@@ -50,13 +57,6 @@ export class Store extends Component {
       .load({ key: `horizontal` })
       .then(({ horizontal }) => this.setState({ calendar: { ...this.state.calendar, horizontal } }))
       .catch(() => this.setState({ calendar: { ...this.state.calendar, horizontal: false } }));
-    storage
-      .load({ key: `currentYear` })
-      .then(({ currentYear }) => {
-        this.setState({ currentYear });
-        this.fetchEvents();
-      })
-      .catch(() => this.setState({ currentYear: `first` }));
   }
 
   fetchEvents = () => {
