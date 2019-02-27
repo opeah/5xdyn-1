@@ -84,13 +84,13 @@ class SettingsScreen extends React.Component {
         <View style={styles.section}>
           <View>
             <TouchableOpacity onPress={() => this.props.ThemeProvider.toggleYear('first')} >
-            <View style={styles.checkedLesson}>
+            <View style={styles.settings}>
               <Text style={{...styles.checkedText,color: `${this.props.ThemeProvider.themeStyle.foreground}`}}>Cours première</Text>
               <Text>{this.renderIconComponent('first')}</Text>
             </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.ThemeProvider.toggleYear('second')} >
-            <View style={styles.checkedLesson}>
+            <View style={styles.settings}>
               <Text style={{...styles.checkedText,color: `${this.props.ThemeProvider.themeStyle.foreground}`}}>Cours deuxième</Text>
               <Text>{this.renderIconComponent('second')}</Text>
             </View>
@@ -105,7 +105,7 @@ class SettingsScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    paddingTop:30,
     height: `100%`,
   },
   settingsTitle: {
@@ -120,29 +120,27 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingBottom:10,
     paddingTop:10,
+
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   textSettings: {
-    fontSize: 23,
+    fontSize: 20,
     paddingBottom: 7,
     paddingRight: 150,
   },
-  checkedLesson: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems:'center',
-    height:50
-  },
+
   checkedText: {
     fontSize:20
   },
   section:{
     backgroundColor: '#333333',
-    borderRadius: 5,
-    padding:20,
-    marginBottom: 20
+    paddingTop:10,
+    paddingBottom:10,
+    paddingRight:20,
+    paddingLeft:20,
+    marginBottom: 20,
   }
 });
 
