@@ -8,12 +8,14 @@ export class Store extends Component {
   state = {
     apiKey: `AIzaSyCTHMnkmKEU6cMQzd6I6qG9LKvttLPf70c`,
     events: null,
+    currentYear: `first`,
+    darkMode: false,
+    notifications: false,
     calendar: {
       horizontal: false,
       first: `ifosupwavre.be_jgjta3bi92ip34u317q3l5tr08@group.calendar.google.com`,
       second: `ifosupwavre.be_8gvh4v3v8dae5ktb21hisci9h0@group.calendar.google.com`,
     },
-    darkMode: false,
     light: {
       foreground: `#222222`,
       background: `#FFFFFF`,
@@ -34,9 +36,6 @@ export class Store extends Component {
         backgroundColor: `#333333`,
       },
     },
-    currentYear: `first`,
-    horizontalCalendar: false,
-    notifications: false,
   };
 
   componentDidMount() {
@@ -65,18 +64,20 @@ export class Store extends Component {
       .then(response => this.setState({ events: response.items }));
   };
 
-  toggleDarkMode = () => {
+  toggleCalendar = () => {
     this.setState({
-      darkMode: !this.state.darkMode,
+      calendar: {
+        ...this.state.calendar,
+        horizontal: !this.state.calendar.horizontal,
+      },
     }, () => {
       storage
         .save({
-          key: `theme`, data: {
-            theme: this.state.darkMode,
+          key: `horizontal`, data: {
+            horizontal: this.state.calendar.horizontal,
           },
         });
     });
-
   };
 
   setCurrentYear = value => {
@@ -93,25 +94,22 @@ export class Store extends Component {
     });
   };
 
-  toggleNotifications = () => {
+  toggleDarkMode = () => {
     this.setState({
-      notifications: !this.state.notifications,
-    });
-  };
-
-  toggleCalendar = () => {
-    this.setState({
-      calendar: {
-        ...this.state.calendar,
-        horizontal: !this.state.calendar.horizontal,
-      },
+      darkMode: !this.state.darkMode,
     }, () => {
       storage
         .save({
-          key: `horizontal`, data: {
-            horizontal: this.state.calendar.horizontal,
+          key: `theme`, data: {
+            theme: this.state.darkMode,
           },
         });
+    });
+  };
+
+  toggleNotifications = () => {
+    this.setState({
+      notifications: !this.state.notifications,
     });
   };
 
