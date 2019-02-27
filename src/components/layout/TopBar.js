@@ -11,7 +11,7 @@ const TopBar = ({ title, ThemeProvider }) => {
         ...styles.topBar__container,
         backgroundColor: `${ThemeProvider.themeStyle.background}`,
         borderBottomColor: `${ThemeProvider.themeStyle.navigationBar.borderColor}`,
-        paddingTop: Platform.OS === `android` ? 50 : 0,
+        paddingTop: Platform.OS === `android` ? 30 : 0,
       }
     }>
       <StatusBar barStyle={ThemeProvider.darkMode ? `light-content` : `dark-content`} />
