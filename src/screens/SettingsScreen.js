@@ -31,7 +31,7 @@ class SettingsScreen extends React.Component {
     this.props.ThemeProvider.toggleDarkMode();
   };
 
-  renderIconComponent = (year) => {
+  renderIconComponent = year => {
     let IconComponent = Ionicons;
     let IconName = 'ios-checkmark';
     if (this.props.ThemeProvider.currentYear === year)
@@ -43,7 +43,6 @@ class SettingsScreen extends React.Component {
   };
 
   render() {
-
     return (
       <SafeAreaView style={{
         height: `100%`,

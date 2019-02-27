@@ -1,15 +1,17 @@
 import React from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { withThemeContext } from '../context/ThemeContext';
 import EventsCalendar from '../components/home/EventsCalendar';
 import EventsList from '../components/home/EventsList';
-import TopBar from '../components/layout/Header';
+import Header from '../components/layout/Header';
 
 class HomeScreen extends React.Component {
   state = {
     events: null,
+    currentTab: 0,
   };
 
   componentDidMount() {
@@ -19,14 +21,44 @@ class HomeScreen extends React.Component {
       .then(response => this.setState({ events: response.items }));
   }
 
+  displayTabs = () => {
+    const tabs = [
+      <EventsList events={this.state.events} />,
+      <EventsCalendar events={this.state.events} />,
+    ];
+
+    if (this.state.events !== null) {
+      return tabs.map((tab, index) => {
+        return index === this.state.currentTab ? <View key={index}>{tab}</View> : false;
+      });
+    }
+  };
+
+  toggleTab = () => {
+    this.setState({
+      currentTab: this.state.currentTab === 0 ? 1 : 0,
+    });
+  };
+
   render() {
-    const { background } = this.props.ThemeProvider.themeStyle;
+    const { background, foreground } = this.props.ThemeProvider.themeStyle;
+    const IconComponent = Ionicons;
+    const IconName = this.state.currentTab === 0 ? `ios-calendar` : `ios-list`;
     return (
       <SafeAreaView style={{ height: `100%`, backgroundColor: `${background}` }}>
-        <TopBar title="Calendrier" />
+        <Header
+          title="Calendrier"
+          icon={
+            <IconComponent
+              onPress={() => this.toggleTab()}
+              name={IconName}
+              size={36}
+              color={foreground}
+            />
+          }
+        />
         <View style={{ height: `100%` }}>
-          {this.state.events !== null ? <EventsCalendar events={this.state.events} /> : false}
-          {this.state.events !== null ? <EventsList events={this.state.events} /> : false}
+          {this.displayTabs()}
         </View>
       </SafeAreaView>
     );
