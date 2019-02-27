@@ -6,17 +6,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { withAppContext } from '../../context/AppContext';
 
 const Check = props => {
-  const { title, first, callback } = props;
-  const { background, foreground } = props.Store.themeStyle;
+  const { title, checked, first, callback, Store } = props;
+  const { background, foreground } = Store.themeStyle;
 
   const renderIcon = () => {
     let IconComponent = Ionicons;
     let IconName = `ios-checkmark`;
-    return !props.checked ? false : (
+    return !checked ? false : (
       <IconComponent
         name={IconName}
         size={40}
-        color={props.Store.darkMode ? `#E76F51` : `#222222`}
+        color={Store.darkMode ? `#E76F51` : `#222222`}
       />
     );
   };

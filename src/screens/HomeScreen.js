@@ -8,8 +8,7 @@ import EventsList from '../components/home/EventsList';
 import Header from '../components/layout/Header';
 import { withAppContext } from '../context/AppContext';
 
-const HomeScreen = props => {
-  let { Store } = props;
+const HomeScreen = ({ Store }) => {
   const { calendar, events, themeStyle } = Store;
 
   const displayTabs = () => {

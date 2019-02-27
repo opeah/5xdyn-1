@@ -34,17 +34,27 @@ export class Store extends Component {
         backgroundColor: `#333333`,
       },
     },
-    currentYear: `second`,
+    currentYear: `first`,
     horizontalCalendar: false,
     notifications: false,
   };
 
   componentDidMount() {
-    this.fetchEvents();
     storage
       .load({ key: `theme` })
       .then(({ theme }) => this.setState({ darkMode: theme }))
       .catch(() => this.setState({ darkMode: false }));
+    storage
+      .load({ key: `horizontal` })
+      .then(({ horizontal }) => this.setState({ calendar: { ...this.state.calendar, horizontal } }))
+      .catch(() => this.setState({ calendar: { ...this.state.calendar, horizontal: false } }));
+    storage
+      .load({ key: `currentYear` })
+      .then(({ currentYear }) => {
+        this.setState({ currentYear });
+        this.fetchEvents();
+      })
+      .catch(() => this.setState({ currentYear: `first` }));
   }
 
   fetchEvents = () => {
@@ -61,8 +71,7 @@ export class Store extends Component {
     }, () => {
       storage
         .save({
-          key: `theme`,
-          data: {
+          key: `theme`, data: {
             theme: this.state.darkMode,
           },
         });
@@ -73,7 +82,15 @@ export class Store extends Component {
   setCurrentYear = value => {
     this.setState({
       currentYear: value,
-    }, () => this.fetchEvents());
+    }, () => {
+      this.fetchEvents();
+      storage
+        .save({
+          key: `currentYear`, data: {
+            currentYear: this.state.currentYear,
+          },
+        });
+    });
   };
 
   toggleNotifications = () => {
@@ -88,6 +105,13 @@ export class Store extends Component {
         ...this.state.calendar,
         horizontal: !this.state.calendar.horizontal,
       },
+    }, () => {
+      storage
+        .save({
+          key: `horizontal`, data: {
+            horizontal: this.state.calendar.horizontal,
+          },
+        });
     });
   };
 
