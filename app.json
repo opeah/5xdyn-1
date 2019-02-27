@@ -12,7 +12,7 @@
     "orientation": "portrait",
     "icon": "./src/assets/calendar.png",
     "splash": {
-      "image": "./src/assets/calendar.png",
+      "image": "./src/assets/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
