@@ -44,7 +44,6 @@ class SettingsScreen extends React.Component {
 
   render() {
 
-    console.log(this.props.ThemeProvider.currentYear);
     return (
       <SafeAreaView style={{
         height: `100%`,
@@ -54,7 +53,7 @@ class SettingsScreen extends React.Component {
         <View style={{
           ...styles.container,
         }}>
-        <View style={styles.section}>
+        <View style={{...styles.section,backgroundColor:`${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}`}}>
           <View style={styles.settings}>
             <Text style={[
               styles.textSettings,
@@ -68,7 +67,7 @@ class SettingsScreen extends React.Component {
               }}
             />
           </View>
-          <View style={styles.settings}>
+          <View style={{...styles.settings,borderTopStyle:'solid',borderTopWidth: 1,borderColor:`${this.props.ThemeProvider.themeStyle.background}`}}>
             <Text
               style={[
                 styles.textSettings,
@@ -81,7 +80,8 @@ class SettingsScreen extends React.Component {
           </View>
         </View>
 
-        <View style={styles.section}>
+
+        <View style={{...styles.section,backgroundColor:`${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}`}}>
           <View>
             <TouchableOpacity onPress={() => this.props.ThemeProvider.toggleYear('first')} >
             <View style={styles.settings}>
@@ -90,7 +90,7 @@ class SettingsScreen extends React.Component {
             </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.ThemeProvider.toggleYear('second')} >
-            <View style={styles.settings}>
+            <View style={{...styles.settings,borderTopStyle:'solid',borderTopWidth: 1,borderColor:`${this.props.ThemeProvider.themeStyle.background}`}}>
               <Text style={{...styles.checkedText,color: `${this.props.ThemeProvider.themeStyle.foreground}`}}>Cours deuxième</Text>
               <Text>{this.renderIconComponent('second')}</Text>
             </View>
@@ -120,10 +120,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingBottom:10,
     paddingTop:10,
-
+    paddingRight:20,
+    paddingLeft:20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    height:50,
   },
   textSettings: {
     fontSize: 20,
@@ -132,16 +134,11 @@ const styles = StyleSheet.create({
   },
 
   checkedText: {
-    fontSize:20
+    fontSize:20,
   },
   section:{
-    backgroundColor: '#333333',
-    paddingTop:10,
-    paddingBottom:10,
-    paddingRight:20,
-    paddingLeft:20,
-    marginBottom: 20,
-  }
+    marginBottom: 50,
+  },
 });
 
 export default withThemeContext(SettingsScreen);
