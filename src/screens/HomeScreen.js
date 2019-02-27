@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { withThemeContext } from '../context/ThemeContext';
 import EventsCalendar from '../components/home/EventsCalendar';
@@ -22,6 +21,7 @@ class HomeScreen extends React.Component {
   }
 
   displayTabs = () => {
+    const { homeTab } = this.props.ThemeProvider;
     const tabs = [
       <EventsList events={this.state.events} />,
       <EventsCalendar events={this.state.events} />,
@@ -29,34 +29,16 @@ class HomeScreen extends React.Component {
 
     if (this.state.events !== null) {
       return tabs.map((tab, index) => {
-        return index === this.state.currentTab ? <View key={index}>{tab}</View> : false;
+        return index === homeTab ? <View key={index}>{tab}</View> : false;
       });
     }
   };
 
-  toggleTab = () => {
-    this.setState({
-      currentTab: this.state.currentTab === 0 ? 1 : 0,
-    });
-  };
-
   render() {
-    const { background, foreground } = this.props.ThemeProvider.themeStyle;
-    const IconComponent = Ionicons;
-    const IconName = this.state.currentTab === 0 ? `ios-calendar` : `ios-list`;
+    const { background } = this.props.ThemeProvider.themeStyle;
     return (
       <SafeAreaView style={{ height: `100%`, backgroundColor: `${background}` }}>
-        <Header
-          title="Calendrier"
-          icon={
-            <IconComponent
-              onPress={() => this.toggleTab()}
-              name={IconName}
-              size={36}
-              color={foreground}
-            />
-          }
-        />
+        <Header title="Calendrier" />
         <View style={{ height: `100%` }}>
           {this.displayTabs()}
         </View>

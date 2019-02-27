@@ -28,6 +28,7 @@ export class ThemeProvider extends Component {
       },
     },
     currentYear: `second`,
+    homeTab: 0,
   };
 
   componentDidMount() {
@@ -61,6 +62,7 @@ export class ThemeProvider extends Component {
       toggleDarkMode: this.toggleDarkMode,
       currentYear: this.state.currentYear,
       toggleYear: this.toggleYear,
+      homeTab: this.state.homeTab,
     };
   };
 
