@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, Platform } from 'react-native';
 import PropTypes from 'prop-types';
 
 import { withThemeContext } from '../../context/ThemeContext';
@@ -11,6 +11,7 @@ const TopBar = ({ title, ThemeProvider }) => {
         ...styles.topBar__container,
         backgroundColor: `${ThemeProvider.themeStyle.background}`,
         borderBottomColor: `${ThemeProvider.themeStyle.navigationBar.borderColor}`,
+        paddingTop: Platform.OS === `android` ? 30 : 10,
       }
     }>
       <StatusBar barStyle={ThemeProvider.darkMode ? `light-content` : `dark-content`} />

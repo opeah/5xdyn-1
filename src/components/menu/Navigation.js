@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Platform } from 'react-native';
 
 import HomeScreen from '../screens/HomeScreen';
 import LessonsScreen from '../screens/LessonsScreen';
@@ -45,7 +46,8 @@ const TabNavigator = createBottomTabNavigator({
       showLabel: false,
       style: {
         backgroundColor: `#1F1F1F`,
-        paddingTop: 10,
+        paddingTop: Platform.OS === `android` ? 30 : 0,
+        paddingBottom: Platform.OS === `android` ? 30 : 0,
       },
     },
     initialRoute: HomeScreen,
