@@ -10,7 +10,6 @@ import Header from '../components/layout/Header';
 class HomeScreen extends React.Component {
   state = {
     events: null,
-    currentTab: 0,
   };
 
   componentDidMount() {
@@ -21,17 +20,11 @@ class HomeScreen extends React.Component {
   }
 
   displayTabs = () => {
-    const { homeTab } = this.props.ThemeProvider;
-    const tabs = [
-      <EventsList events={this.state.events} />,
-      <EventsCalendar events={this.state.events} />,
-    ];
+    const { horizontalCalendar } = this.props.ThemeProvider;
 
-    if (this.state.events !== null) {
-      return tabs.map((tab, index) => {
-        return index === homeTab ? <View key={index}>{tab}</View> : false;
-      });
-    }
+    return !horizontalCalendar && this.state.events !== null ?
+      <EventsList events={this.state.events} /> :
+      <EventsCalendar events={this.state.events} />;
   };
 
   render() {
