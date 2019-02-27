@@ -28,6 +28,8 @@ export class ThemeProvider extends Component {
       },
     },
     currentYear: `second`,
+    horizontalCalendar: false,
+    notifications: false,
   };
 
   componentDidMount() {
@@ -45,12 +47,33 @@ export class ThemeProvider extends Component {
   toggleDarkMode = () => {
     this.setState({
       darkMode: !this.state.darkMode,
+    }, () => {
+      storage
+        .save({
+          key: `theme`,
+          data: {
+            theme: this.state.darkMode,
+          },
+        });
+    });
+
+  };
+
+  setCurrentYear = value => {
+    this.setState({
+      currentYear: value,
     });
   };
 
-  toggleYear = value => {
+  toggleNotifications = () => {
     this.setState({
-      currentYear: value,
+      notifications: !this.state.notifications,
+    });
+  };
+
+  toggleCalendar = () => {
+    this.setState({
+      horizontalCalendar: !this.state.horizontalCalendar,
     });
   };
 
@@ -60,7 +83,11 @@ export class ThemeProvider extends Component {
       themeStyle: this.state.darkMode ? this.state.dark : this.state.light,
       toggleDarkMode: this.toggleDarkMode,
       currentYear: this.state.currentYear,
-      toggleYear: this.toggleYear,
+      setCurrentYear: this.setCurrentYear,
+      horizontalCalendar: this.state.horizontalCalendar,
+      toggleCalendar: this.toggleCalendar,
+      notifications: this.state.notifications,
+      toggleNotifications: this.toggleNotifications,
     };
   };
 

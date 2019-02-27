@@ -5,11 +5,12 @@ import { SafeAreaView } from 'react-navigation';
 import { withThemeContext } from '../context/ThemeContext';
 import EventsCalendar from '../components/home/EventsCalendar';
 import EventsList from '../components/home/EventsList';
-import TopBar from '../components/layout/Header';
+import Header from '../components/layout/Header';
 
 class HomeScreen extends React.Component {
   state = {
     events: null,
+    currentTab: 0,
   };
 
   componentDidMount() {
@@ -19,14 +20,27 @@ class HomeScreen extends React.Component {
       .then(response => this.setState({ events: response.items }));
   }
 
+  displayTabs = () => {
+    const { homeTab } = this.props.ThemeProvider;
+    const tabs = [
+      <EventsList events={this.state.events} />,
+      <EventsCalendar events={this.state.events} />,
+    ];
+
+    if (this.state.events !== null) {
+      return tabs.map((tab, index) => {
+        return index === homeTab ? <View key={index}>{tab}</View> : false;
+      });
+    }
+  };
+
   render() {
     const { background } = this.props.ThemeProvider.themeStyle;
     return (
       <SafeAreaView style={{ height: `100%`, backgroundColor: `${background}` }}>
-        <TopBar title="Calendrier" />
+        <Header title="Calendrier" />
         <View style={{ height: `100%` }}>
-          {this.state.events !== null ? <EventsCalendar events={this.state.events} /> : false}
-          {this.state.events !== null ? <EventsList events={this.state.events} /> : false}
+          {this.displayTabs()}
         </View>
       </SafeAreaView>
     );
