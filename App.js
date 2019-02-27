@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Menu from './src/components/menu/Navigation';
+import Menu from './src/components/layout/Navigation';
 import { ThemeProvider } from './src/context/ThemeContext';
 
 class App extends Component {

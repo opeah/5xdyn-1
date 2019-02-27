@@ -2,9 +2,9 @@ import React from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
-import { withThemeContext } from '../../context/ThemeContext';
-import TopBar from '../layout/TopBar';
-import lessons from '../../data/lessons';
+import { withThemeContext } from '../context/ThemeContext';
+import TopBar from '../components/layout/Header';
+import lessons from '../data/lessons';
 
 class LessonsScreen extends React.Component {
   state = {

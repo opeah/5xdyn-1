@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { withThemeContext } from '../../context/ThemeContext';
 
-const TopBar = ({ title, ThemeProvider }) => {
+const Header = ({ title, ThemeProvider }) => {
   return (
     <View style={
       {
@@ -23,11 +23,11 @@ const TopBar = ({ title, ThemeProvider }) => {
   );
 };
 
-TopBar.defaultProps = {
+Header.defaultProps = {
   title: `Calendrier`,
 };
 
-TopBar.propTypes = {
+Header.propTypes = {
   title: PropTypes.string.isRequired,
   ThemeProvider: PropTypes.object.isRequired,
 };
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withThemeContext(TopBar);
+export default withThemeContext(Header);

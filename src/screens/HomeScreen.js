@@ -2,10 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
-import { withThemeContext } from '../../context/ThemeContext';
-import EventsCalendar from '../home/EventsCalendar';
-import EventsList from '../home/EventsList';
-import TopBar from '../layout/TopBar';
+import { withThemeContext } from '../context/ThemeContext';
+import EventsCalendar from '../components/home/EventsCalendar';
+import EventsList from '../components/home/EventsList';
+import TopBar from '../components/layout/Header';
 
 class HomeScreen extends React.Component {
   state = {
