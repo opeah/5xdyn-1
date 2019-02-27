@@ -7,7 +7,10 @@ export const AppContext = createContext();
 export class Store extends Component {
   state = {
     apiKey: `AIzaSyCTHMnkmKEU6cMQzd6I6qG9LKvttLPf70c`,
-    events: null,
+    events: {
+      first: null,
+      second: null,
+    },
     currentYear: `first`,
     darkMode: false,
     notifications: false,
@@ -58,10 +61,17 @@ export class Store extends Component {
 
   fetchEvents = () => {
     const { apiKey, currentYear, calendar } = this.state;
-    let postsUrl = `https://www.googleapis.com/calendar/v3/calendars/${calendar[currentYear]}/events?key=${apiKey}&singleEvents=true&orderBy=startTime`;
-    fetch(postsUrl)
-      .then(response => response.json())
-      .then(response => this.setState({ events: response.items }));
+    if (this.state.events[currentYear] === null) {
+      let postsUrl = `https://www.googleapis.com/calendar/v3/calendars/${calendar[currentYear]}/events?key=${apiKey}&singleEvents=true&orderBy=startTime`;
+      fetch(postsUrl)
+        .then(response => response.json())
+        .then(response => this.setState({
+          events: {
+            ...this.state.events,
+            [currentYear]: response.items,
+          },
+        }));
+    }
   };
 
   toggleCalendar = () => {

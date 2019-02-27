@@ -9,13 +9,13 @@ import Header from '../components/layout/Header';
 import { withAppContext } from '../context/AppContext';
 
 const HomeScreen = ({ Store }) => {
-  const { calendar, events, themeStyle } = Store;
+  const { calendar, events, themeStyle, currentYear } = Store;
 
   const displayTabs = () => {
-    if (events !== null) {
+    if (events[currentYear] !== null) {
       return !calendar.horizontal ?
-        <EventsList events={events} /> :
-        <EventsCalendar events={events} />;
+        <EventsList events={events[currentYear]} /> :
+        <EventsCalendar events={events[currentYear]} />;
     } else {
       return <Text>Chargement...</Text>;
     }
