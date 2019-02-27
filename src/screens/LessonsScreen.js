@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
 import { withThemeContext } from '../context/ThemeContext';
-import TopBar from '../components/layout/Header';
+import Header from '../components/layout/Header';
 import lessons from '../data/lessons';
 
 class LessonsScreen extends React.Component {
@@ -44,7 +44,7 @@ class LessonsScreen extends React.Component {
         height: `100%`,
         backgroundColor: `${this.props.ThemeProvider.themeStyle.background}`,
       }}>
-        <TopBar title="Cours" />
+        <Header title="Cours" />
         <View style={{ height: `100%` }}>
           <ScrollView style={{
             ...styles.lessonsList,

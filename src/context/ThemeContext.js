@@ -49,7 +49,7 @@ export class ThemeProvider extends Component {
     });
   };
 
-  toggleYear = value => {
+  setCurrentYear = value => {
     this.setState({
       currentYear: value,
     });
@@ -61,7 +61,7 @@ export class ThemeProvider extends Component {
       themeStyle: this.state.darkMode ? this.state.dark : this.state.light,
       toggleDarkMode: this.toggleDarkMode,
       currentYear: this.state.currentYear,
-      toggleYear: this.toggleYear,
+      setCurrentYear: this.setCurrentYear,
       homeTab: this.state.homeTab,
     };
   };
