@@ -36,6 +36,9 @@ export class ThemeProvider extends Component {
     })
       .then(({ theme }) => this.setState({
         darkMode: theme,
+      }))
+      .catch(() => this.setState({
+        darkMode: false,
       }));
   }
 
