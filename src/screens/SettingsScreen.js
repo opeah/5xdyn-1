@@ -86,8 +86,27 @@ class SettingsScreen extends React.Component {
               />
             </View>
           </View>
-
-
+          <View style={{
+            ...styles.section,
+            backgroundColor: `${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}`,
+          }}>
+            <View style={{
+              ...styles.settings,
+              borderTopStyle: 'solid',
+              borderTopWidth: 1,
+              borderColor: `${this.props.ThemeProvider.themeStyle.background}`,
+            }}>
+              <Text
+                style={[
+                  styles.textSettings,
+                  { color: `${this.props.ThemeProvider.themeStyle.foreground}` }]}>Horizontal</Text>
+              <Switch
+                value={this.state.notifications}
+                onValueChange={() => {
+                }}
+              />
+            </View>
+          </View>
           <View style={{
             ...styles.section,
             backgroundColor: `${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}`,
