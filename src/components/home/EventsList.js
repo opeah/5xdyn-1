@@ -4,7 +4,7 @@ import Moment from 'moment';
 import PropTypes from 'prop-types';
 
 import { config } from '../../locale/moment';
-import { withThemeContext } from '../../context/ThemeContext';
+import { withAppContext } from '../../context/AppContext';
 
 Moment.locale(`fr`, config);
 
@@ -50,6 +50,7 @@ class EventsList extends Component {
   };
 
   renderEvents = () => {
+    const { Store } = this.props;
     if (this.state.events !== null) {
       return Object.keys(this.state.events)
         .map(year => {
@@ -57,7 +58,7 @@ class EventsList extends Component {
             <View key={year}>
               <Text style={{
                 ...styles.eventsList__year,
-                color: this.props.ThemeProvider.themeStyle.foreground,
+                color: Store.themeStyle.foreground,
               }}>{year}</Text>
               {Object.keys(this.state.events[year])
                 .map((number, index) => {
@@ -65,11 +66,11 @@ class EventsList extends Component {
                     <View key={index}>
                       <Text style={{
                         ...styles.eventsList__month,
-                        color: this.props.ThemeProvider.themeStyle.foreground,
+                        color: Store.themeStyle.foreground,
                       }}>{this.state.events[year][number].month}</Text>
                       {this.state.events[year][number].events.map(event => {
-                        const color = { color: `${this.props.ThemeProvider.themeStyle.foreground}` };
-                        const background = { backgroundColor: `${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}` };
+                        const color = { color: `${Store.themeStyle.foreground}` };
+                        const background = { backgroundColor: `${Store.themeStyle.eventsList.backgroundColor}` };
                         const day = Moment(event.start.date || event.start.dateTime)
                           .format(`DD`);
                         const month = Moment(event.start.date || event.start.dateTime)
@@ -173,4 +174,4 @@ EventsList.propTypes = {
   events: PropTypes.array.isRequired,
 };
 
-export default withThemeContext(EventsList);
+export default withAppContext(EventsList);

@@ -6,11 +6,10 @@ import { SafeAreaView } from 'react-navigation';
 import EventsCalendar from '../components/home/EventsCalendar';
 import EventsList from '../components/home/EventsList';
 import Header from '../components/layout/Header';
-import { withThemeContext } from '../context/ThemeContext';
+import { withAppContext } from '../context/AppContext';
 
-const HomeScreen = props => {
-  let { ThemeProvider } = props;
-  const { calendar, events, themeStyle } = ThemeProvider;
+const HomeScreen = ({ Store }) => {
+  const { calendar, events, themeStyle } = Store;
 
   const displayTabs = () => {
     if (events !== null) {
@@ -34,4 +33,4 @@ const HomeScreen = props => {
 
 HomeScreen.propTypes = { ThemeProvider: PropTypes.any };
 
-export default withThemeContext(HomeScreen);
+export default withAppContext(HomeScreen);

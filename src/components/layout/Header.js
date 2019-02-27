@@ -2,24 +2,24 @@ import React from 'react';
 import { View, Text, StyleSheet, StatusBar, Platform } from 'react-native';
 import PropTypes from 'prop-types';
 
-import { withThemeContext } from '../../context/ThemeContext';
+import { withAppContext } from '../../context/AppContext';
 
-const Header = ({ title, ThemeProvider, icon }) => {
+const Header = ({ title, Store }) => {
   return (
     <View style={
       {
         ...styles.Header__container,
-        backgroundColor: `${ThemeProvider.themeStyle.background}`,
-        borderBottomColor: `${ThemeProvider.themeStyle.navigationBar.borderColor}`,
+        backgroundColor: `${Store.themeStyle.background}`,
+        borderBottomColor: `${Store.themeStyle.navigationBar.borderColor}`,
         paddingTop: Platform.OS === `android` ? 30 : 10,
       }
     }>
-      <StatusBar barStyle={ThemeProvider.darkMode ? `light-content` : `dark-content`} />
+      <StatusBar barStyle={Store.darkMode ? `light-content` : `dark-content`} />
       <View>
         <Text
           style={{
             ...styles.Header__title,
-            color: `${ThemeProvider.themeStyle.foreground}`,
+            color: `${Store.themeStyle.foreground}`,
           }}>{title}</Text>
       </View>
     </View>
@@ -32,7 +32,7 @@ Header.defaultProps = {
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
-  ThemeProvider: PropTypes.object.isRequired,
+  Store: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withThemeContext(Header);
+export default withAppContext(Header);

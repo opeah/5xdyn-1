@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, Switch, Text, View } from 'react-native';
 
-import { withThemeContext } from '../../context/ThemeContext';
+import { withAppContext } from '../../context/AppContext';
 
 const Toggle = props => {
-  const { background, foreground } = props.ThemeProvider.themeStyle;
+  const { background, foreground } = props.Store.themeStyle;
   const { title, active, first, callback } = props;
 
   return (
@@ -54,4 +54,4 @@ Toggle.propTypes = {
   callback: PropTypes.func.isRequired,
 };
 
-export default withThemeContext(Toggle);
+export default withAppContext(Toggle);

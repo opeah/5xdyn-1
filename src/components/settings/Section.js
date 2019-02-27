@@ -2,11 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
-import { withThemeContext } from '../../context/ThemeContext';
+import { withAppContext } from '../../context/AppContext';
 
-const Section = ({ title, children, ThemeProvider }) => {
-  const { backgroundColor } = ThemeProvider.themeStyle.eventsList;
-  const { foreground } = ThemeProvider.themeStyle;
+const Section = ({ title, children, Store }) => {
+  const { backgroundColor } = Store.themeStyle.eventsList;
+  const { foreground } = Store.themeStyle;
 
   return (
     <View style={{ ...styles.Section }}>
@@ -35,4 +35,4 @@ Section.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default withThemeContext(Section);
+export default withAppContext(Section);

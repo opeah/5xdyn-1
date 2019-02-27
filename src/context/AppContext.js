@@ -2,18 +2,20 @@ import React, { Component, createContext } from 'react';
 
 import { storage } from '../storage/Storage';
 
-export const ThemeContext = createContext();
+export const AppContext = createContext();
 
-export class ThemeProvider extends Component {
+export class Store extends Component {
   state = {
     apiKey: `AIzaSyCTHMnkmKEU6cMQzd6I6qG9LKvttLPf70c`,
     events: null,
+    currentYear: `first`,
+    darkMode: false,
+    notifications: false,
     calendar: {
       horizontal: false,
       first: `ifosupwavre.be_jgjta3bi92ip34u317q3l5tr08@group.calendar.google.com`,
       second: `ifosupwavre.be_8gvh4v3v8dae5ktb21hisci9h0@group.calendar.google.com`,
     },
-    darkMode: false,
     light: {
       foreground: `#222222`,
       background: `#FFFFFF`,
@@ -34,17 +36,24 @@ export class ThemeProvider extends Component {
         backgroundColor: `#333333`,
       },
     },
-    currentYear: `second`,
-    horizontalCalendar: false,
-    notifications: false,
   };
 
   componentDidMount() {
-    this.fetchEvents();
     storage
       .load({ key: `theme` })
       .then(({ theme }) => this.setState({ darkMode: theme }))
       .catch(() => this.setState({ darkMode: false }));
+    storage
+      .load({ key: `horizontal` })
+      .then(({ horizontal }) => this.setState({ calendar: { ...this.state.calendar, horizontal } }))
+      .catch(() => this.setState({ calendar: { ...this.state.calendar, horizontal: false } }));
+    storage
+      .load({ key: `currentYear` })
+      .then(({ currentYear }) => {
+        this.setState({ currentYear });
+        this.fetchEvents();
+      })
+      .catch(() => this.setState({ currentYear: `first` }));
   }
 
   fetchEvents = () => {
@@ -55,25 +64,47 @@ export class ThemeProvider extends Component {
       .then(response => this.setState({ events: response.items }));
   };
 
+  toggleCalendar = () => {
+    this.setState({
+      calendar: {
+        ...this.state.calendar,
+        horizontal: !this.state.calendar.horizontal,
+      },
+    }, () => {
+      storage
+        .save({
+          key: `horizontal`, data: {
+            horizontal: this.state.calendar.horizontal,
+          },
+        });
+    });
+  };
+
+  setCurrentYear = value => {
+    this.setState({
+      currentYear: value,
+    }, () => {
+      this.fetchEvents();
+      storage
+        .save({
+          key: `currentYear`, data: {
+            currentYear: this.state.currentYear,
+          },
+        });
+    });
+  };
+
   toggleDarkMode = () => {
     this.setState({
       darkMode: !this.state.darkMode,
     }, () => {
       storage
         .save({
-          key: `theme`,
-          data: {
+          key: `theme`, data: {
             theme: this.state.darkMode,
           },
         });
     });
-
-  };
-
-  setCurrentYear = value => {
-    this.setState({
-      currentYear: value,
-    }, () => this.fetchEvents());
   };
 
   toggleNotifications = () => {
@@ -82,16 +113,7 @@ export class ThemeProvider extends Component {
     });
   };
 
-  toggleCalendar = () => {
-    this.setState({
-      calendar: {
-        ...this.state.calendar,
-        horizontal: !this.state.calendar.horizontal,
-      },
-    });
-  };
-
-  getTheme = () => {
+  getData = () => {
     return {
       events: this.state.events,
       fetchEvents: this.fetchEvents,
@@ -110,20 +132,20 @@ export class ThemeProvider extends Component {
 
   render() {
     return (
-      <ThemeContext.Provider value={this.getTheme()}>
+      <AppContext.Provider value={this.getData()}>
         {this.props.children}
-      </ThemeContext.Provider>
+      </AppContext.Provider>
     );
   }
 }
 
-export function withThemeContext(Component) {
+export function withAppContext(Component) {
   class ComponentWithContext extends React.Component {
     render() {
       return (
-        <ThemeContext.Consumer>
-          {value => <Component {...this.props} ThemeProvider={value} />}
-        </ThemeContext.Consumer>
+        <AppContext.Consumer>
+          {value => <Component {...this.props} Store={value} />}
+        </AppContext.Consumer>
       );
     }
   }
