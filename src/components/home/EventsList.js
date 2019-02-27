@@ -25,7 +25,7 @@ class EventsList extends Component {
 
   sortEvents = () => {
     const events = {};
-    if (this.props.events !== null) {
+    if (this.props.events !== null || this.props.events !== undefined) {
       this.props.events.filter(event => {
         const start = event.start.date || event.start.dateTime;
         const year = Moment(start)
@@ -45,64 +45,66 @@ class EventsList extends Component {
         }
         events[year][number].events.push(event);
       });
+      this.setState({ events });
     }
-    this.setState({ events });
   };
 
   renderEvents = () => {
-    return Object.keys(this.state.events)
-      .map(year => {
-        return (
-          <View key={year}>
-            <Text style={{
-              ...styles.eventsList__year,
-              color: this.props.ThemeProvider.themeStyle.foreground,
-            }}>{year}</Text>
-            {Object.keys(this.state.events[year])
-              .map((number, index) => {
-                return (
-                  <View key={index}>
-                    <Text style={{
-                      ...styles.eventsList__month,
-                      color: this.props.ThemeProvider.themeStyle.foreground,
-                    }}>{this.state.events[year][number].month}</Text>
-                    {this.state.events[year][number].events.map(event => {
-                      const color = { color: `${this.props.ThemeProvider.themeStyle.foreground}` };
-                      const background = { backgroundColor: `${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}` };
-                      const day = Moment(event.start.date || event.start.dateTime)
-                        .format(`DD`);
-                      const month = Moment(event.start.date || event.start.dateTime)
-                        .format(`MMM`);
-                      const begin = Moment(event.start.date || event.start.dateTime)
-                        .format(`HH:mm`);
-                      const end = Moment(event.end.date || event.end.dateTime)
-                        .format(`HH:mm`);
-                      return (
-                        <View key={event.id} style={{ ...styles.eventsItem, ...background }}>
-                          <View style={{ ...styles.eventsItem__left }}>
-                            <Text style={{ ...styles.eventsItem__day, ...color }}>{day}</Text>
-                            <Text style={{ ...styles.eventsItem__month, ...color }}>{month}</Text>
-                          </View>
-                          <View style={{ ...styles.eventsItem__right }}>
-                            <Text style={{ ...styles.eventsItem__title, ...color }}>{event.summary}</Text>
-                            <View style={{ ...styles.eventsItem__hour }}>
-                              <Text style={{ ...styles.eventsItem__begin, ...color }}>
-                                {begin === `00:00` ? `Toute la journée` : `${begin} -`}
-                              </Text>
-                              <Text style={{ ...styles.eventsItem__end, ...color }}>
-                                {begin === `00:00` ? `` : ` ${end}`}
-                              </Text>
+    if (this.state.events !== null) {
+      return Object.keys(this.state.events)
+        .map(year => {
+          return (
+            <View key={year}>
+              <Text style={{
+                ...styles.eventsList__year,
+                color: this.props.ThemeProvider.themeStyle.foreground,
+              }}>{year}</Text>
+              {Object.keys(this.state.events[year])
+                .map((number, index) => {
+                  return (
+                    <View key={index}>
+                      <Text style={{
+                        ...styles.eventsList__month,
+                        color: this.props.ThemeProvider.themeStyle.foreground,
+                      }}>{this.state.events[year][number].month}</Text>
+                      {this.state.events[year][number].events.map(event => {
+                        const color = { color: `${this.props.ThemeProvider.themeStyle.foreground}` };
+                        const background = { backgroundColor: `${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}` };
+                        const day = Moment(event.start.date || event.start.dateTime)
+                          .format(`DD`);
+                        const month = Moment(event.start.date || event.start.dateTime)
+                          .format(`MMM`);
+                        const begin = Moment(event.start.date || event.start.dateTime)
+                          .format(`HH:mm`);
+                        const end = Moment(event.end.date || event.end.dateTime)
+                          .format(`HH:mm`);
+                        return (
+                          <View key={event.id} style={{ ...styles.eventsItem, ...background }}>
+                            <View style={{ ...styles.eventsItem__left }}>
+                              <Text style={{ ...styles.eventsItem__day, ...color }}>{day}</Text>
+                              <Text style={{ ...styles.eventsItem__month, ...color }}>{month}</Text>
+                            </View>
+                            <View style={{ ...styles.eventsItem__right }}>
+                              <Text style={{ ...styles.eventsItem__title, ...color }}>{event.summary}</Text>
+                              <View style={{ ...styles.eventsItem__hour }}>
+                                <Text style={{ ...styles.eventsItem__begin, ...color }}>
+                                  {begin === `00:00` ? `Toute la journée` : `${begin} -`}
+                                </Text>
+                                <Text style={{ ...styles.eventsItem__end, ...color }}>
+                                  {begin === `00:00` ? `` : ` ${end}`}
+                                </Text>
+                              </View>
                             </View>
                           </View>
-                        </View>
-                      );
-                    })}
-                  </View>
-                );
-              })}
-          </View>
-        );
-      });
+                        );
+                      })}
+                    </View>
+                  );
+                })}
+            </View>
+          );
+        });
+    }
   };
 
   render() {

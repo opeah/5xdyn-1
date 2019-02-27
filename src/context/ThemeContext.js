@@ -90,6 +90,7 @@ export class ThemeProvider extends Component {
   toggleCalendar = () => {
     this.setState({
       calendar: {
+        ...this.state.calendar,
         horizontal: !this.state.calendar.horizontal,
       },
     });

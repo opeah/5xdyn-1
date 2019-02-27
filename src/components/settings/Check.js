@@ -15,7 +15,7 @@ const Check = props => {
     return !props.checked ? false : (
       <IconComponent
         name={IconName}
-        size={36}
+        size={40}
         color={props.ThemeProvider.darkMode ? `#E76F51` : `#222222`}
       />
     );
@@ -31,7 +31,7 @@ const Check = props => {
           borderColor: !first ? `${background}` : ``,
         }}>
           <Text style={{ ...styles.Check__text, color: `${foreground}` }}>{title}</Text>
-          <View style={{ marginLeft: `auto` }}>{renderIcon()}</View>
+          <View style={styles.Check__icon}>{renderIcon()}</View>
         </View>
       </TouchableOpacity>
     </View>
@@ -49,6 +49,12 @@ const styles = StyleSheet.create({
   },
   Check__text: {
     fontSize: 18,
+  },
+  Check__icon: {
+    marginLeft: `auto`,
+    height: 38,
+    marginTop: -6,
+    marginRight: 15,
   },
 });
 
