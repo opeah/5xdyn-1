@@ -17,6 +17,12 @@ class EventsList extends Component {
     this.sortEvents();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.events !== this.props.events) {
+      this.sortEvents();
+    }
+  }
+
   sortEvents = () => {
     const events = {};
     if (this.props.events !== null) {
@@ -44,9 +50,6 @@ class EventsList extends Component {
   };
 
   renderEvents = () => {
-    if (this.state.events === null) {
-      return false;
-    }
     return Object.keys(this.state.events)
       .map(year => {
         return (

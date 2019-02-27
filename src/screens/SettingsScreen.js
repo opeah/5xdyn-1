@@ -10,6 +10,7 @@ import { withThemeContext } from '../context/ThemeContext';
 
 const SettingsScreen = ({ ThemeProvider }) => {
   const {
+    calendar,
     darkMode,
     currentYear,
     themeStyle,
@@ -41,7 +42,7 @@ const SettingsScreen = ({ ThemeProvider }) => {
         <Section title="Calendrier">
           <Toggle
             title="Horizontal"
-            active={horizontalCalendar}
+            active={calendar.horizontal}
             first={true}
             callback={() => toggleCalendar()}
           />
