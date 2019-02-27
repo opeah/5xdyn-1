@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet, Switch } from 'react-native';
+import { View, Text, StyleSheet, Switch,TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
 import { withThemeContext } from '../../context/ThemeContext';
 import { storage } from '../../storage/Storage';
 import TopBar from '../layout/TopBar';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+
 
 class SettingsScreen extends React.Component {
   state = {
@@ -30,7 +33,18 @@ class SettingsScreen extends React.Component {
     this.props.ThemeProvider.toggleDarkMode();
   };
 
+  renderIconComponent = (year) => {
+    let IconComponent = Ionicons;
+    let IconName = 'ios-checkmark';
+    if(this.props.ThemeProvider.currentYear === year)
+    return (
+      <IconComponent name={IconName} size={40} color={this.state.darkMode ? '#E76F51': '#222222'}/>
+    )
+  };
+
   render() {
+
+    console.log(this.props.ThemeProvider.currentYear);
     return (
       <SafeAreaView style={{
         height: `100%`,
@@ -40,6 +54,7 @@ class SettingsScreen extends React.Component {
         <View style={{
           ...styles.container,
         }}>
+        <View style={styles.section}>
           <View style={styles.settings}>
             <Text style={[
               styles.textSettings,
@@ -65,6 +80,24 @@ class SettingsScreen extends React.Component {
             />
           </View>
         </View>
+
+        <View style={styles.section}>
+          <View>
+            <TouchableOpacity onPress={() => this.props.ThemeProvider.toggleYear('first')} >
+            <View style={styles.checkedLesson}>
+              <Text style={{...styles.checkedText,color: `${this.props.ThemeProvider.themeStyle.foreground}`}}>Cours première</Text>
+              <Text>{this.renderIconComponent('first')}</Text>
+            </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.ThemeProvider.toggleYear('second')} >
+            <View style={styles.checkedLesson}>
+              <Text style={{...styles.checkedText,color: `${this.props.ThemeProvider.themeStyle.foreground}`}}>Cours deuxième</Text>
+              <Text>{this.renderIconComponent('second')}</Text>
+            </View>
+            </TouchableOpacity>
+            </View>
+          </View>
+        </View>
       </SafeAreaView>
     );
   }
@@ -85,16 +118,32 @@ const styles = StyleSheet.create({
   },
   settings: {
     fontSize: 20,
-    paddingBottom: 30,
+    paddingBottom:10,
+    paddingTop:10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   textSettings: {
-    fontSize: 25,
+    fontSize: 23,
     paddingBottom: 7,
     paddingRight: 150,
   },
+  checkedLesson: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems:'center',
+    height:50
+  },
+  checkedText: {
+    fontSize:20
+  },
+  section:{
+    backgroundColor: '#333333',
+    borderRadius: 5,
+    padding:20,
+    marginBottom: 20
+  }
 });
 
 export default withThemeContext(SettingsScreen);
