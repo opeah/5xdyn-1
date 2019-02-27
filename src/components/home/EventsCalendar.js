@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 
-import { withThemeContext } from '../../context/ThemeContext';
+import { withAppContext } from '../../context/AppContext';
 
 class EventsCalendar extends Component {
   render() {
-    const { background, foreground } = this.props.ThemeProvider.themeStyle;
     return (
       <View>
         <Text>Calendrier</Text>
@@ -19,4 +18,4 @@ EventsCalendar.propTypes = {
   events: PropTypes.array,
 };
 
-export default withThemeContext(EventsCalendar);
+export default withAppContext(EventsCalendar);

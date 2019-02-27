@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 import Menu from './src/components/layout/Navigation';
-import { ThemeProvider } from './src/context/ThemeContext';
+import { Store } from './src/context/AppContext';
 
 class App extends Component {
   render() {
     return (
-      <ThemeProvider>
+      <Store>
         <Menu />
-      </ThemeProvider>
+      </Store>
     );
   }
 }

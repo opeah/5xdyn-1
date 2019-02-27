@@ -6,9 +6,9 @@ import Header from '../components/layout/Header';
 import Check from '../components/settings/Check';
 import Section from '../components/settings/Section';
 import Toggle from '../components/settings/Toggle';
-import { withThemeContext } from '../context/ThemeContext';
+import { withAppContext } from '../context/AppContext';
 
-const SettingsScreen = ({ ThemeProvider }) => {
+const SettingsScreen = ({ Store }) => {
   const {
     calendar,
     darkMode,
@@ -16,11 +16,10 @@ const SettingsScreen = ({ ThemeProvider }) => {
     themeStyle,
     setCurrentYear,
     toggleDarkMode,
-    horizontalCalendar,
     toggleCalendar,
     notifications,
     toggleNotifications,
-  } = ThemeProvider;
+  } = Store;
 
   return (
     <SafeAreaView style={{ ...styles.Settings, backgroundColor: `${themeStyle.background}` }}>
@@ -75,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withThemeContext(SettingsScreen);
+export default withAppContext(SettingsScreen);

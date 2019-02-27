@@ -3,11 +3,11 @@ import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { withThemeContext } from '../../context/ThemeContext';
+import { withAppContext } from '../../context/AppContext';
 
 const Check = props => {
   const { title, first, callback } = props;
-  const { background, foreground } = props.ThemeProvider.themeStyle;
+  const { background, foreground } = props.Store.themeStyle;
 
   const renderIcon = () => {
     let IconComponent = Ionicons;
@@ -16,7 +16,7 @@ const Check = props => {
       <IconComponent
         name={IconName}
         size={40}
-        color={props.ThemeProvider.darkMode ? `#E76F51` : `#222222`}
+        color={props.Store.darkMode ? `#E76F51` : `#222222`}
       />
     );
   };
@@ -70,4 +70,4 @@ Check.propTypes = {
   callback: PropTypes.func.isRequired,
 };
 
-export default withThemeContext(Check);
+export default withAppContext(Check);

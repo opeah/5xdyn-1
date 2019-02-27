@@ -2,9 +2,9 @@ import React, { Component, createContext } from 'react';
 
 import { storage } from '../storage/Storage';
 
-export const ThemeContext = createContext();
+export const AppContext = createContext();
 
-export class ThemeProvider extends Component {
+export class Store extends Component {
   state = {
     apiKey: `AIzaSyCTHMnkmKEU6cMQzd6I6qG9LKvttLPf70c`,
     events: null,
@@ -91,7 +91,7 @@ export class ThemeProvider extends Component {
     });
   };
 
-  getTheme = () => {
+  getData = () => {
     return {
       events: this.state.events,
       fetchEvents: this.fetchEvents,
@@ -110,20 +110,20 @@ export class ThemeProvider extends Component {
 
   render() {
     return (
-      <ThemeContext.Provider value={this.getTheme()}>
+      <AppContext.Provider value={this.getData()}>
         {this.props.children}
-      </ThemeContext.Provider>
+      </AppContext.Provider>
     );
   }
 }
 
-export function withThemeContext(Component) {
+export function withAppContext(Component) {
   class ComponentWithContext extends React.Component {
     render() {
       return (
-        <ThemeContext.Consumer>
-          {value => <Component {...this.props} ThemeProvider={value} />}
-        </ThemeContext.Consumer>
+        <AppContext.Consumer>
+          {value => <Component {...this.props} Store={value} />}
+        </AppContext.Consumer>
       );
     }
   }
