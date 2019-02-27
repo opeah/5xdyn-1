@@ -3,7 +3,8 @@ import { View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
 import { withThemeContext } from '../../context/ThemeContext';
-import EventsList from '../calendar/EventsList';
+import EventsCalendar from '../home/EventsCalendar';
+import EventsList from '../home/EventsList';
 import TopBar from '../layout/TopBar';
 
 class HomeScreen extends React.Component {
@@ -24,7 +25,7 @@ class HomeScreen extends React.Component {
       <SafeAreaView style={{ height: `100%`, backgroundColor: `${background}` }}>
         <TopBar title="Calendrier" />
         <View style={{ height: `100%` }}>
-          {/*<EventsCalendar />*/}
+          {this.state.events !== null ? <EventsCalendar events={this.state.events} /> : false}
           {this.state.events !== null ? <EventsList events={this.state.events} /> : false}
         </View>
       </SafeAreaView>

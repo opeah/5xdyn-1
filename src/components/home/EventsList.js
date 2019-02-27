@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
 
-import { config } from '../../locale/config';
+import { config } from '../../locale/moment';
 import { withThemeContext } from '../../context/ThemeContext';
 
 Moment.locale(`fr`, config);
