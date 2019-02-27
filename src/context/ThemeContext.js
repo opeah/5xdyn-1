@@ -41,15 +41,10 @@ export class ThemeProvider extends Component {
 
   componentDidMount() {
     this.fetchEvents();
-    storage.load({
-      key: `theme`,
-    })
-      .then(({ theme }) => this.setState({
-        darkMode: theme,
-      }))
-      .catch(() => this.setState({
-        darkMode: false,
-      }));
+    storage
+      .load({ key: `theme` })
+      .then(({ theme }) => this.setState({ darkMode: theme }))
+      .catch(() => this.setState({ darkMode: false }));
   }
 
   fetchEvents = () => {
