@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
-import Header from '../components/layout/Header';
 
+import Header from '../components/layout/Header';
 import Check from '../components/settings/Check';
 import Section from '../components/settings/Section';
 import Toggle from '../components/settings/Toggle';
@@ -18,6 +18,7 @@ const SettingsScreen = ({ ThemeProvider }) => {
     horizontalCalendar,
     toggleCalendar,
     notifications,
+    toggleNotifications,
   } = ThemeProvider;
 
   return (
@@ -34,7 +35,7 @@ const SettingsScreen = ({ ThemeProvider }) => {
           <Toggle
             title="Notifications"
             active={notifications}
-            callback={() => console.log(notifications)}
+            callback={() => toggleNotifications()}
           />
         </Section>
         <Section title="Calendrier">

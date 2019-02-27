@@ -45,22 +45,29 @@ export class ThemeProvider extends Component {
   }
 
   toggleDarkMode = () => {
-    storage
-      .save({
-        key: `theme`,
-        data: {
-          theme: this.state.darkMode,
-        },
-      })
-      .then(() => this.setState({
-        darkMode: !this.state.darkMode,
-      }))
-      .catch(err => console.log(err));
+    this.setState({
+      darkMode: !this.state.darkMode,
+    }, () => {
+      storage
+        .save({
+          key: `theme`,
+          data: {
+            theme: this.state.darkMode,
+          },
+        });
+    });
+
   };
 
   setCurrentYear = value => {
     this.setState({
       currentYear: value,
+    });
+  };
+
+  toggleNotifications = () => {
+    this.setState({
+      notifications: !this.state.notifications,
     });
   };
 
@@ -78,8 +85,9 @@ export class ThemeProvider extends Component {
       currentYear: this.state.currentYear,
       setCurrentYear: this.setCurrentYear,
       horizontalCalendar: this.state.horizontalCalendar,
-      notifications: this.state.notifications,
       toggleCalendar: this.toggleCalendar,
+      notifications: this.state.notifications,
+      toggleNotifications: this.toggleNotifications,
     };
   };
 
