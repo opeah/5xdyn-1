@@ -1,3 +1,3 @@
-import * as pushNotification from './pushNotification';
+import * as pushNotifications from './pushNotifications';
 
-export { pushNotification }
+export { pushNotifications }
