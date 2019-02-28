@@ -1,6 +1,7 @@
 import React, { Component, createContext } from 'react';
 
 import { storage } from '../storage/Storage';
+import lessons from '../data/lessons';
 
 export const AppContext = createContext();
 
@@ -11,6 +12,7 @@ export class Store extends Component {
       first: null,
       second: null,
     },
+    lessons: null,
     currentYear: `first`,
     darkMode: false,
     calendar: {
@@ -59,6 +61,10 @@ export class Store extends Component {
       .load({ key: `all` })
       .then(({ all }) => this.setState({ calendar: { ...this.state.calendar, all } }))
       .catch(() => this.setState({ calendar: { ...this.state.calendar, all: false } }));
+    storage
+      .load({ key: `lessons` })
+      .then(({ lessons }) => this.setState({ lessons }))
+      .catch(() => this.fetchLessons());
   }
 
   fetchEvents = () => {
@@ -88,6 +94,46 @@ export class Store extends Component {
           },
         });
     });
+  };
+
+  fetchLessons = () => {
+    this.setState({
+      lessons,
+    }, () => {
+      storage
+        .save({
+          key: `lessons`, data: {
+            lessons: this.state.lessons,
+          },
+        });
+    });
+  };
+
+  addNoteToLesson = (id, note) => {
+    const { lessons, currentYear } = this.state;
+    Object
+      .keys(this.state.lessons[currentYear])
+      .map(item => {
+        if (item.toString() === id.toString()) {
+          const array = lessons[currentYear];
+          const data = lessons[currentYear][item];
+          data.note = note;
+          array[item] = data;
+          this.setState({
+            lessons: {
+              ...this.state.lessons,
+              [currentYear]: array,
+            },
+          }, () => {
+            storage
+              .save({
+                key: `lessons`, data: {
+                  lessons: this.state.lessons,
+                },
+              });
+          });
+        }
+      });
   };
 
   setCurrentYear = value => {
@@ -123,6 +169,8 @@ export class Store extends Component {
     return {
       events: this.state.events,
       fetchEvents: this.fetchEvents,
+      lessons: this.state.lessons,
+      addNoteToLesson: this.addNoteToLesson,
       calendar: this.state.calendar,
       darkMode: this.state.darkMode,
       themeStyle: this.state.darkMode ? this.state.dark : this.state.light,
