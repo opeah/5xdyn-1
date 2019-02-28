@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
 import EventsCalendar from '../components/home/EventsCalendar';
@@ -17,7 +17,14 @@ const HomeScreen = ({ Store }) => {
         <EventsList events={events[currentYear]} /> :
         <EventsCalendar events={events[currentYear]} />;
     } else {
-      return <Text>Chargement...</Text>;
+      return (
+        <View style={styles.Home__loading}>
+          <Text style={{
+            ...styles.Home__loading__text,
+            color: `${themeStyle.foreground}`,
+          }}>Chargement...</Text>
+        </View>
+      );
     }
   };
 
@@ -30,6 +37,17 @@ const HomeScreen = ({ Store }) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  Home__loading: {
+    padding: 20,
+  },
+  Home__loading__text: {
+    textAlign: `center`,
+    fontSize: 20,
+    fontWeight: `800`,
+  },
+});
 
 HomeScreen.propTypes = { ThemeProvider: PropTypes.any };
 

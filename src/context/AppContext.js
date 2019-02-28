@@ -61,17 +61,15 @@ export class Store extends Component {
 
   fetchEvents = () => {
     const { apiKey, currentYear, calendar } = this.state;
-    if (this.state.events[currentYear] === null) {
-      let postsUrl = `https://www.googleapis.com/calendar/v3/calendars/${calendar[currentYear]}/events?key=${apiKey}&singleEvents=true&orderBy=startTime`;
-      fetch(postsUrl)
-        .then(response => response.json())
-        .then(response => this.setState({
-          events: {
-            ...this.state.events,
-            [currentYear]: response.items,
-          },
-        }));
-    }
+    let postsUrl = `https://www.googleapis.com/calendar/v3/calendars/${calendar[currentYear]}/events?key=${apiKey}&singleEvents=true&orderBy=startTime`;
+    fetch(postsUrl)
+      .then(response => response.json())
+      .then(response => this.setState({
+        events: {
+          ...this.state.events,
+          [currentYear]: response.items,
+        },
+      }));
   };
 
   toggleCalendar = () => {
@@ -94,7 +92,9 @@ export class Store extends Component {
     this.setState({
       currentYear: value,
     }, () => {
-      this.fetchEvents();
+      if (this.state.events[this.state.currentYear] === null) {
+        this.fetchEvents();
+      }
       storage
         .save({
           key: `currentYear`, data: {
