@@ -3,9 +3,9 @@ import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Platform } from 'react-native';
 
-import HomeScreen from '../screens/HomeScreen';
-import LessonsScreen from '../screens/LessonsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import HomeScreen from '../../screens/HomeScreen';
+import LessonsScreen from '../../screens/LessonsScreen';
+import SettingsScreen from '../../screens/SettingsScreen';
 
 const TabNavigator = createBottomTabNavigator({
     Home: {

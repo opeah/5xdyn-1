@@ -1,82 +1,26 @@
-import React from 'react';
-import { Text, View, ScrollView, StyleSheet, StatusBar } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+import React, { Component } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Moment from 'moment';
+import PropTypes from 'prop-types';
 
+import { config } from '../../locale/moment';
 import { withThemeContext } from '../../context/ThemeContext';
-import TopBar from '../layout/TopBar';
 
-Moment.locale(`fr`, {
-  months: 'Janvier_Février_Mars_Avril_Mai_Juin_Juillet_Août_Septembre_Octobre_Novembre_Décembre'.split('_'),
-  monthsShort: 'jan_fév_mar_avr_mai_jui_jui_aoû_sep_oct_nov_déc'.split('_'),
-  monthsParseExact: true,
-  weekdays: 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
-  weekdaysShort: 'dim._lun._mar._mer._jeu._ven._sam.'.split('_'),
-  weekdaysMin: 'Di_Lu_Ma_Me_Je_Ve_Sa'.split('_'),
-  weekdaysParseExact: true,
-  longDateFormat: {
-    LT: 'HH:mm',
-    LTS: 'HH:mm:ss',
-    L: 'DD/MM/YYYY',
-    LL: 'D MMMM YYYY',
-    LLL: 'D MMMM YYYY HH:mm',
-    LLLL: 'dddd D MMMM YYYY HH:mm',
-  },
-  calendar: {
-    sameDay: '[Aujourd’hui à] LT',
-    nextDay: '[Demain à] LT',
-    nextWeek: 'dddd [à] LT',
-    lastDay: '[Hier à] LT',
-    lastWeek: 'dddd [dernier à] LT',
-    sameElse: 'L',
-  },
-  relativeTime: {
-    future: 'dans %s',
-    past: 'il y a %s',
-    s: 'quelques secondes',
-    m: 'une minute',
-    mm: '%d minutes',
-    h: 'une heure',
-    hh: '%d heures',
-    d: 'un jour',
-    dd: '%d jours',
-    M: 'un mois',
-    MM: '%d mois',
-    y: 'un an',
-    yy: '%d ans',
-  },
-  dayOfMonthOrdinalParse: /\d{1,2}(er|e)/,
-  ordinal: function (number) {
-    return number + (number === 1 ? 'er' : 'e');
-  },
-  meridiemParse: /PD|MD/,
-  isPM: function (input) {
-    return input.charAt(0) === 'M';
-  },
-  // In case the meridiem units are not separated around 12, then implement
-  // this function (look at locale/id.js for an example).
-  // meridiemHour : function (hour, meridiem) {
-  //     return /* 0-23 hour, given meridiem token and hour 1-12 */ ;
-  // },
-  meridiem: function (hours, minutes, isLower) {
-    return hours < 12 ? 'PD' : 'MD';
-  },
-  week: {
-    dow: 1, // Monday is the first day of the week.
-    doy: 4,  // Used to determine first week of the year.
-  },
-});
+Moment.locale(`fr`, config);
 
-class HomeScreen extends React.Component {
+class EventsList extends Component {
   state = {
-    events: null,
-    sortedEvents: null,
+    events: [],
   };
 
-  sortEventsByYear = () => {
-    const sortedEvents = {};
-    if (this.state.events !== null) {
-      this.state.events.filter(event => {
+  componentDidMount() {
+    this.sortEvents();
+  }
+
+  sortEvents = () => {
+    const events = {};
+    if (this.props.events !== null) {
+      this.props.events.filter(event => {
         const start = event.start.date || event.start.dateTime;
         const year = Moment(start)
           .format(`YYYY`);
@@ -84,37 +28,26 @@ class HomeScreen extends React.Component {
           .format('M');
         const month = Moment(start)
           .format('MMMM');
-        if (sortedEvents[year] === undefined) {
-          sortedEvents[year] = {};
+        if (events[year] === undefined) {
+          events[year] = {};
         }
-        if (sortedEvents[year][number] === undefined) {
-          sortedEvents[year][number] = {
+        if (events[year][number] === undefined) {
+          events[year][number] = {
             month,
             events: [],
           };
         }
-        sortedEvents[year][number].events.push(event);
+        events[year][number].events.push(event);
       });
     }
-    this.setState({ sortedEvents });
+    this.setState({ events });
   };
 
-  componentDidMount() {
-    let postsUrl = `https://www.googleapis.com/calendar/v3/calendars/ifosupwavre.be_8gvh4v3v8dae5ktb21hisci9h0@group.calendar.google.com/events?key=AIzaSyCTHMnkmKEU6cMQzd6I6qG9LKvttLPf70c&singleEvents=true&orderBy=startTime`;
-    fetch(postsUrl)
-      .then(response => response.json())
-      .then(response => {
-        this.setState({
-          events: response.items,
-        }, () => this.sortEventsByYear());
-      });
-  }
-
   renderEvents = () => {
-    if (this.state.sortedEvents === null) {
+    if (this.state.events === null) {
       return false;
     }
-    return Object.keys(this.state.sortedEvents)
+    return Object.keys(this.state.events)
       .map(year => {
         return (
           <View key={year}>
@@ -122,15 +55,15 @@ class HomeScreen extends React.Component {
               ...styles.eventsList__year,
               color: this.props.ThemeProvider.themeStyle.foreground,
             }}>{year}</Text>
-            {Object.keys(this.state.sortedEvents[year])
+            {Object.keys(this.state.events[year])
               .map((number, index) => {
                 return (
                   <View key={index}>
                     <Text style={{
                       ...styles.eventsList__month,
                       color: this.props.ThemeProvider.themeStyle.foreground,
-                    }}>{this.state.sortedEvents[year][number].month}</Text>
-                    {this.state.sortedEvents[year][number].events.map(event => {
+                    }}>{this.state.events[year][number].month}</Text>
+                    {this.state.events[year][number].events.map(event => {
                       const color = { color: `${this.props.ThemeProvider.themeStyle.foreground}` };
                       const background = { backgroundColor: `${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}` };
                       const day = Moment(event.start.date || event.start.dateTime)
@@ -171,17 +104,9 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{
-        height: `100%`,
-        backgroundColor: `${this.props.ThemeProvider.themeStyle.background}`,
-      }}>
-        <TopBar title="Calendrier" />
-        <View style={{ height: `100%` }}>
-          <ScrollView style={styles.eventsList}>
-            {this.renderEvents()}
-          </ScrollView>
-        </View>
-      </SafeAreaView>
+      <ScrollView style={styles.eventsList}>
+        {this.renderEvents()}
+      </ScrollView>
     );
   }
 }
@@ -239,4 +164,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withThemeContext(HomeScreen);
+EventsList.propTypes = {
+  events: PropTypes.array.isRequired,
+};
+
+export default withThemeContext(EventsList);
