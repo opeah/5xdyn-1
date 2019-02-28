@@ -111,7 +111,9 @@ class EventsList extends Component {
   render() {
     return (
       <ScrollView style={styles.eventsList}>
-        {this.renderEvents()}
+        <View style={styles.eventsList__container}>
+          {this.renderEvents()}
+        </View>
       </ScrollView>
     );
   }
@@ -120,7 +122,10 @@ class EventsList extends Component {
 const styles = StyleSheet.create({
   eventsList: {
     padding: 20,
-    marginBottom: 20,
+  },
+  eventsList__container: {
+    paddingBottom: 30,
+    marginBottom: 50,
   },
   eventsList__year: {
     fontSize: 20,
