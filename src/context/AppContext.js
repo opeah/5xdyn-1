@@ -63,7 +63,6 @@ export class Store extends Component {
   }
 
   fetchEvents = () => {
-    console.log(`fetch`);
     const { apiKey, currentYear, calendar } = this.state;
     let postsUrl = `https://www.googleapis.com/calendar/v3/calendars/${calendar[currentYear]}/events?key=${apiKey}&singleEvents=true&orderBy=startTime`;
     fetch(postsUrl)
