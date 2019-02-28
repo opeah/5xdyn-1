@@ -60,7 +60,7 @@ class HomeScreen extends Component {
     const { calendar, themeStyle, currentYear } = this.props.Store;
 
     if (this.state[currentYear] !== null) {
-      return !calendar.horizontal ?
+      return calendar.all ?
         <EventsList events={this.state[currentYear]} /> :
         <EventsCalendar events={this.state[currentYear]} />;
     } else {

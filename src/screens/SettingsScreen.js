@@ -40,8 +40,8 @@ const SettingsScreen = ({ Store }) => {
         </Section>
         <Section title="Calendrier">
           <Toggle
-            title="Horizontal"
-            active={calendar.horizontal}
+            title="Tous les évenements"
+            active={calendar.all}
             first={true}
             callback={() => toggleCalendar()}
           />
