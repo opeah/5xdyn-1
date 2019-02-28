@@ -48,7 +48,10 @@ export class Store extends Component {
         this.setState({ currentYear });
         this.fetchEvents();
       })
-      .catch(() => this.setState({ currentYear: `first` }));
+      .catch(() => {
+        this.setState({ currentYear: `first` });
+        this.fetchEvents();
+      });
     storage
       .load({ key: `theme` })
       .then(({ theme }) => this.setState({ darkMode: theme }))
@@ -60,6 +63,7 @@ export class Store extends Component {
   }
 
   fetchEvents = () => {
+    console.log(`fetch`);
     const { apiKey, currentYear, calendar } = this.state;
     let postsUrl = `https://www.googleapis.com/calendar/v3/calendars/${calendar[currentYear]}/events?key=${apiKey}&singleEvents=true&orderBy=startTime`;
     fetch(postsUrl)
