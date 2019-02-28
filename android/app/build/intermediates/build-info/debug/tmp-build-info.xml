@@ -3,10 +3,10 @@
     abi="x86"
     api-level="28"
     build-mode="FULL"
-    density="420dpi"
+    density="560dpi"
     format="10"
     plugin-version="3.3.1"
-    timestamp="1551268496979"
+    timestamp="1551305439746"
     token="-2894974586761839277"
     verifier="FULL_BUILD_REQUESTED" >
 

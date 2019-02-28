@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
+import {View} from 'react-native';
+import Menu from './src/components/layout/Navigation';
+import { Store } from './src/context/AppContext';
 
-import Menu from './src/components/menu/Navigation';
-import { ThemeProvider } from './src/context/ThemeContext';
+import LocalNotification from './src/notifications/NotificationsPush';
 
 class App extends Component {
   render() {
     return (
-      <ThemeProvider>
+      <Store>
+        <View>
+          <LocalNotification ref="localNotification"/>
+        </View>
         <Menu />
-      </ThemeProvider>
+      </Store>
     );
   }
 }

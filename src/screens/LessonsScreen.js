@@ -2,9 +2,9 @@ import React from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
-import { withThemeContext } from '../../context/ThemeContext';
-import TopBar from '../layout/TopBar';
-import lessons from '../../data/lessons';
+import { withAppContext } from '../context/AppContext';
+import Header from '../components/layout/Header';
+import lessons from '../data/lessons';
 
 class LessonsScreen extends React.Component {
   state = {
@@ -12,19 +12,18 @@ class LessonsScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.setState({
-      lessons,
-    });
+    this.setState({ lessons });
   }
 
   renderLessons = () => {
+    const { Store } = this.props;
     if (this.state.lessons === null) {
       return false;
     }
-    return this.state.lessons.lessons[this.props.ThemeProvider.currentYear].map((
+    return this.state.lessons.lessons[Store.currentYear].map((
       lesson, index) => {
-      const color = { color: `${this.props.ThemeProvider.themeStyle.foreground}` };
-      const background = { backgroundColor: `${this.props.ThemeProvider.themeStyle.eventsList.backgroundColor}` };
+      const color = { color: `${Store.themeStyle.foreground}` };
+      const background = { backgroundColor: `${Store.themeStyle.eventsList.backgroundColor}` };
       return (
         <View key={index} style={{ ...styles.lessonsItem, ...background }}>
           <Text style={{ ...styles.lessonItem__title, ...color }}>{lesson.title}</Text>
@@ -39,12 +38,13 @@ class LessonsScreen extends React.Component {
   };
 
   render() {
+    const { Store } = this.props;
     return (
       <SafeAreaView style={{
         height: `100%`,
-        backgroundColor: `${this.props.ThemeProvider.themeStyle.background}`,
+        backgroundColor: `${Store.themeStyle.background}`,
       }}>
-        <TopBar title="Cours" />
+        <Header title="Cours" />
         <View style={{ height: `100%` }}>
           <ScrollView style={{
             ...styles.lessonsList,
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
     flexDirection: `column`,
   },
 });
-export default withThemeContext(LessonsScreen);
+export default withAppContext(LessonsScreen);
