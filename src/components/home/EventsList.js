@@ -81,15 +81,7 @@ class EventsList extends Component {
                           .format(`HH:mm`);
                         return (
                           <View key={event.id} style={{ ...styles.eventsItem, ...background }}>
-                            <View style={{ ...styles.eventsItem__left }}  ref={(ref) => { this.marker = ref }}
-                                                                          onLayout={({nativeEvent}) => {
-                                                                            if (this.marker) {
-                                                                              this.marker.measure((x, y, width, height, pageX, pageY) => {
-                                                                                        console.log(x, y, width, height, pageX, pageY);
-                                                                              })
-                                                                            }
-                                                                          }}
-                                                                        >
+                            <View style={{ ...styles.eventsItem__left }}>
                               <Text style={{ ...styles.eventsItem__day, ...color }}>{day}</Text>
                               <Text style={{ ...styles.eventsItem__month, ...color }}>{month}</Text>
                             </View>
