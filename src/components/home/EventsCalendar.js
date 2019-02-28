@@ -14,77 +14,96 @@ class EventsCalendar extends Component {
   renderEvents = () => {
     const { Store } = this.props;
     if (this.props.events !== null) {
-      return Object.keys(this.props.events)
-        .map((year, index) => {
-          return (
-            <View key={index}>
-              <View style={{
-                display: this.state.currentYear.toString() === year.toString()
-                  ? `flex`
-                  : `none`,
-              }}>
-                <Text style={{ color: Store.themeStyle.foreground, ...styles.EventsCalendar__year }}>{year}</Text>
-              </View>
-              <View>
-                {Object.keys(this.props.events[year])
-                  .map((number, index) => {
-                    return (
-                      <View key={index} style={{
-                        display: this.state.currentMonth.toString() === (number).toString()
-                          ? `flex`
-                          : `none`,
-                      }}>
-                        <Text style={{ color: Store.themeStyle.foreground, ...styles.EventsCalendar__month }}>
-                          {this.props.events[this.state.currentYear][number.toString()] !==
-                          undefined
-                            ? this.props.events[this.state.currentYear][number.toString()].month
-                            : `${this.state.currentMonth}`}
-                        </Text>
-                      </View>
-                    );
-                  })}
-              </View>
-              <View style={{
-                display: this.state.currentYear.toString() === year.toString()
-                  ? `flex`
-                  : `none`,
-              }}>
-                {this.props.events[this.state.currentYear][this.state.currentMonth.toString()].events.map(
-                  (event) => {
-                    const color = { color: `${Store.themeStyle.foreground}` };
-                    const background = { backgroundColor: `${Store.themeStyle.eventsList.backgroundColor}` };
-                    const day = Moment(event.start.date || event.start.dateTime)
-                      .format(`DD`);
-                    const month = Moment(event.start.date || event.start.dateTime)
-                      .format(`MMM`);
-                    const begin = Moment(event.start.date || event.start.dateTime)
-                      .format(`HH:mm`);
-                    const end = Moment(event.end.date || event.end.dateTime)
-                      .format(`HH:mm`);
-                    return (
-                      <View key={event.id} style={{ ...styles.eventsItem, ...background }}>
-                        <View style={{ ...styles.eventsItem__left }}>
-                          <Text style={{ ...styles.eventsItem__day, ...color }}>{day}</Text>
-                          <Text style={{ ...styles.eventsItem__month, ...color }}>{month}</Text>
+      if (this.props.events[this.state.currentYear] !== undefined) {
+        return Object.keys(this.props.events)
+          .map((year, index) => {
+            return (
+              <View key={index}>
+                <View style={{
+                  display: this.state.currentYear.toString() === year.toString()
+                    ? `flex`
+                    : `none`,
+                }}>
+                  <Text style={{ color: Store.themeStyle.foreground, ...styles.EventsCalendar__year }}>{year}</Text>
+                </View>
+                <View>
+                  {Object.keys(this.props.events[year])
+                    .map((number, index) => {
+                      return (
+                        <View key={index} style={{
+                          display: this.state.currentMonth.toString() === (number).toString()
+                            ? `flex`
+                            : `none`,
+                        }}>
+                          <Text style={{ color: Store.themeStyle.foreground, ...styles.EventsCalendar__month }}>
+                            {this.props.events[this.state.currentYear][number.toString()] !==
+                            undefined
+                              ? this.props.events[this.state.currentYear][number.toString()].month
+                              : `${this.state.currentMonth}`}
+                          </Text>
                         </View>
-                        <View style={{ ...styles.eventsItem__right }}>
-                          <Text style={{ ...styles.eventsItem__title, ...color }}>{event.summary}</Text>
-                          <View style={{ ...styles.eventsItem__hour }}>
-                            <Text style={{ ...styles.eventsItem__begin, ...color }}>
-                              {begin === `00:00` ? `Toute la journée` : `${begin} -`}
-                            </Text>
-                            <Text style={{ ...styles.eventsItem__end, ...color }}>
-                              {begin === `00:00` ? `` : ` ${end}`}
-                            </Text>
+                      );
+                    })}
+                </View>
+                <View style={{
+                  display: this.state.currentYear.toString() === year.toString()
+                    ? `flex`
+                    : `none`,
+                }}>
+                  {this.props.events[this.state.currentYear][this.state.currentMonth.toString()] ===
+                  undefined ? false : (
+                    this.props.events[this.state.currentYear][this.state.currentMonth.toString()].events.map(
+                      (event) => {
+                        const color = { color: `${Store.themeStyle.foreground}` };
+                        const background = { backgroundColor: `${Store.themeStyle.eventsList.backgroundColor}` };
+                        const day = Moment(event.start.date || event.start.dateTime)
+                          .format(`DD`);
+                        const month = Moment(event.start.date || event.start.dateTime)
+                          .format(`MMM`);
+                        const begin = Moment(event.start.date || event.start.dateTime)
+                          .format(`HH:mm`);
+                        const end = Moment(event.end.date || event.end.dateTime)
+                          .format(`HH:mm`);
+                        return (
+                          <View key={event.id} style={{ ...styles.eventsItem, ...background }}>
+                            <View style={{ ...styles.eventsItem__left }}>
+                              <Text style={{ ...styles.eventsItem__day, ...color }}>{day}</Text>
+                              <Text style={{ ...styles.eventsItem__month, ...color }}>{month}</Text>
+                            </View>
+                            <View style={{ ...styles.eventsItem__right }}>
+                              <Text style={{ ...styles.eventsItem__title, ...color }}>{event.summary}</Text>
+                              <View style={{ ...styles.eventsItem__hour }}>
+                                <Text style={{ ...styles.eventsItem__begin, ...color }}>
+                                  {begin === `00:00` ? `Toute la journée` : `${begin} -`}
+                                </Text>
+                                <Text style={{ ...styles.eventsItem__end, ...color }}>
+                                  {begin === `00:00` ? `` : ` ${end}`}
+                                </Text>
+                              </View>
+                            </View>
                           </View>
-                        </View>
-                      </View>
-                    );
-                  })}
+                        );
+                      })
+                  )}
+                </View>
               </View>
-            </View>
-          );
-        });
+            );
+          });
+      } else {
+        return (
+          <View>
+            <Text style={{
+              ...styles.EventsCalendar__year,
+              color: Store.themeStyle.foreground,
+            }}>{this.state.currentYear}</Text>
+            <Text style={{
+              ...styles.EventsCalendar__month,
+              color: Store.themeStyle.foreground,
+            }}>Aucun évenements</Text>
+          </View>
+        );
+      }
+
     }
   };
 

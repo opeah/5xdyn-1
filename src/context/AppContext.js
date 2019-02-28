@@ -13,7 +13,6 @@ export class Store extends Component {
     },
     currentYear: `first`,
     darkMode: false,
-    notifications: false,
     calendar: {
       all: false,
       first: `ifosupwavre.be_jgjta3bi92ip34u317q3l5tr08@group.calendar.google.com`,
@@ -120,12 +119,6 @@ export class Store extends Component {
     });
   };
 
-  toggleNotifications = () => {
-    this.setState({
-      notifications: !this.state.notifications,
-    });
-  };
-
   getData = () => {
     return {
       events: this.state.events,
@@ -138,8 +131,6 @@ export class Store extends Component {
       setCurrentYear: this.setCurrentYear,
       horizontalCalendar: this.state.horizontalCalendar,
       toggleCalendar: this.toggleCalendar,
-      notifications: this.state.notifications,
-      toggleNotifications: this.toggleNotifications,
     };
   };
 
