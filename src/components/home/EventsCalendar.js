@@ -99,7 +99,7 @@ class EventsCalendar extends Component {
             <Text style={{
               ...styles.EventsCalendar__month,
               color: Store.themeStyle.foreground,
-            }}>Aucun évenements</Text>
+            }}>Aucun événements</Text>
           </View>
         );
       }

@@ -33,7 +33,7 @@ const SettingsScreen = ({ Store }) => {
         </Section>
         <Section title="Calendrier">
           <Toggle
-            title="Tous les évenements"
+            title="Tous les événements"
             active={calendar.all}
             first={true}
             callback={() => toggleCalendar()}
