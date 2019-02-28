@@ -3,56 +3,13 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
 
-import { config } from '../../locale/moment';
 import { withAppContext } from '../../context/AppContext';
 
-Moment.locale(`fr`, config);
-
 class EventsList extends Component {
-  state = {
-    events: [],
-  };
-
-  componentDidMount() {
-    this.sortEvents();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.events !== this.props.events) {
-      this.sortEvents();
-    }
-  }
-
-  sortEvents = () => {
-    const events = {};
-    if (this.props.events !== null || this.props.events !== undefined) {
-      this.props.events.filter(event => {
-        const start = event.start.date || event.start.dateTime;
-        const year = Moment(start)
-          .format(`YYYY`);
-        const number = Moment(start)
-          .format('M');
-        const month = Moment(start)
-          .format('MMMM');
-        if (events[year] === undefined) {
-          events[year] = {};
-        }
-        if (events[year][number] === undefined) {
-          events[year][number] = {
-            month,
-            events: [],
-          };
-        }
-        events[year][number].events.push(event);
-      });
-      this.setState({ events });
-    }
-  };
-
   renderEvents = () => {
     const { Store } = this.props;
-    if (this.state.events !== null) {
-      return Object.keys(this.state.events)
+    if (this.props.events !== null) {
+      return Object.keys(this.props.events)
         .map(year => {
           return (
             <View key={year}>
@@ -60,15 +17,15 @@ class EventsList extends Component {
                 ...styles.eventsList__year,
                 color: Store.themeStyle.foreground,
               }}>{year}</Text>
-              {Object.keys(this.state.events[year])
+              {Object.keys(this.props.events[year])
                 .map((number, index) => {
                   return (
                     <View key={index}>
                       <Text style={{
                         ...styles.eventsList__month,
                         color: Store.themeStyle.foreground,
-                      }}>{this.state.events[year][number].month}</Text>
-                      {this.state.events[year][number].events.map(event => {
+                      }}>{this.props.events[year][number].month}</Text>
+                      {this.props.events[year][number].events.map(event => {
                         const color = { color: `${Store.themeStyle.foreground}` };
                         const background = { backgroundColor: `${Store.themeStyle.eventsList.backgroundColor}` };
                         const day = Moment(event.start.date || event.start.dateTime)
@@ -111,7 +68,9 @@ class EventsList extends Component {
   render() {
     return (
       <ScrollView style={styles.eventsList}>
-        {this.renderEvents()}
+        <View style={styles.eventsList__container}>
+          {this.renderEvents()}
+        </View>
       </ScrollView>
     );
   }
@@ -120,7 +79,10 @@ class EventsList extends Component {
 const styles = StyleSheet.create({
   eventsList: {
     padding: 20,
-    marginBottom: 20,
+  },
+  eventsList__container: {
+    paddingBottom: 30,
+    marginBottom: 50,
   },
   eventsList__year: {
     fontSize: 20,

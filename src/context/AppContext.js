@@ -15,7 +15,7 @@ export class Store extends Component {
     darkMode: false,
     notifications: false,
     calendar: {
-      horizontal: false,
+      all: false,
       first: `ifosupwavre.be_jgjta3bi92ip34u317q3l5tr08@group.calendar.google.com`,
       second: `ifosupwavre.be_8gvh4v3v8dae5ktb21hisci9h0@group.calendar.google.com`,
     },
@@ -48,15 +48,18 @@ export class Store extends Component {
         this.setState({ currentYear });
         this.fetchEvents();
       })
-      .catch(() => this.setState({ currentYear: `first` }));
+      .catch(() => {
+        this.setState({ currentYear: `first` });
+        this.fetchEvents();
+      });
     storage
       .load({ key: `theme` })
       .then(({ theme }) => this.setState({ darkMode: theme }))
       .catch(() => this.setState({ darkMode: false }));
     storage
-      .load({ key: `horizontal` })
-      .then(({ horizontal }) => this.setState({ calendar: { ...this.state.calendar, horizontal } }))
-      .catch(() => this.setState({ calendar: { ...this.state.calendar, horizontal: false } }));
+      .load({ key: `all` })
+      .then(({ all }) => this.setState({ calendar: { ...this.state.calendar, all } }))
+      .catch(() => this.setState({ calendar: { ...this.state.calendar, all: false } }));
   }
 
   fetchEvents = () => {
@@ -76,13 +79,13 @@ export class Store extends Component {
     this.setState({
       calendar: {
         ...this.state.calendar,
-        horizontal: !this.state.calendar.horizontal,
+        all: !this.state.calendar.all,
       },
     }, () => {
       storage
         .save({
-          key: `horizontal`, data: {
-            horizontal: this.state.calendar.horizontal,
+          key: `all`, data: {
+            all: this.state.calendar.all,
           },
         });
     });

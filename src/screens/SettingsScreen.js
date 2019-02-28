@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
 import Header from '../components/layout/Header';
@@ -24,7 +24,7 @@ const SettingsScreen = ({ Store }) => {
   return (
     <SafeAreaView style={{ ...styles.Settings, backgroundColor: `${themeStyle.background}` }}>
       <Header title="Réglages" />
-      <View style={styles.Settings__container}>
+      <ScrollView style={styles.Settings__container}>
         <Section title="Général">
           <Toggle
             title="Mode nuit"
@@ -40,8 +40,8 @@ const SettingsScreen = ({ Store }) => {
         </Section>
         <Section title="Calendrier">
           <Toggle
-            title="Horizontal"
-            active={calendar.horizontal}
+            title="Tous les évenements"
+            active={calendar.all}
             first={true}
             callback={() => toggleCalendar()}
           />
@@ -59,7 +59,7 @@ const SettingsScreen = ({ Store }) => {
             callback={() => setCurrentYear(`second`)}
           />
         </Section>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
