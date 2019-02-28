@@ -17,8 +17,6 @@ const SettingsScreen = ({ Store }) => {
     setCurrentYear,
     toggleDarkMode,
     toggleCalendar,
-    notifications,
-    toggleNotifications,
   } = Store;
 
   return (
@@ -31,11 +29,6 @@ const SettingsScreen = ({ Store }) => {
             active={darkMode}
             first={true}
             callback={() => toggleDarkMode()}
-          />
-          <Toggle
-            title="Notifications"
-            active={notifications}
-            callback={() => toggleNotifications()}
           />
         </Section>
         <Section title="Calendrier">
