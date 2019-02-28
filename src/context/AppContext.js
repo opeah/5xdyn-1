@@ -111,7 +111,8 @@ export class Store extends Component {
 
   addNoteToLesson = (id, note) => {
     const { lessons, currentYear } = this.state;
-    Object.keys(this.state.lessons[this.state.currentYear])
+    Object
+      .keys(this.state.lessons[currentYear])
       .map(item => {
         if (item.toString() === id.toString()) {
           const array = lessons[currentYear];
@@ -120,8 +121,16 @@ export class Store extends Component {
           array[item] = data;
           this.setState({
             lessons: {
-              [currentYear]: [...array],
+              ...this.state.lessons,
+              [currentYear]: array,
             },
+          }, () => {
+            storage
+              .save({
+                key: `lessons`, data: {
+                  lessons: this.state.lessons,
+                },
+              });
           });
         }
       });

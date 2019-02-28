@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, StyleSheet, Text, Button, Picker } from 'react-native';
+import { View, StyleSheet, Text, Button, Picker } from 'react-native';
 import PropTypes from 'prop-types';
 
 import { withAppContext } from '../../context/AppContext';
@@ -8,8 +8,11 @@ class Lesson extends Component {
   state = { note: 0, pickers: [], open: false };
 
   componentDidMount() {
-    if (this.props.lesson.note === undefined) {
-      this.setState({ note: this.props.note });
+    console.log(this.props.lesson.note);
+    if (this.props.lesson.note !== undefined) {
+      this.setState({ note: this.props.lesson.note });
+    } else {
+      this.setState({ note: 0 });
     }
     let pickers = [];
     for (let i = 0; i <= 100; i++) {
@@ -18,11 +21,20 @@ class Lesson extends Component {
     this.setState({ pickers: [...pickers] });
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.lesson.note !== this.props.lesson.note) {
+      console.log(this.props.lesson.note);
+      if (this.props.lesson.note !== undefined) {
+        this.setState({ note: this.props.lesson.note });
+      }
+    }
+  }
+
   onSubmit = () => {
     this.props.Store.addNoteToLesson(this.props.id, this.state.note);
   };
 
-  renderPicker = () => {
+  renderPickers = () => {
     return this.state.pickers.map(picker => picker);
   };
 
@@ -37,9 +49,10 @@ class Lesson extends Component {
           {`${lesson.period} périodes - ${lesson.credits} crédits - ${lesson.professor}`}
         </Text>
         <View>
-          {<Text style={styles.Lesson__note}>{lesson.note !== undefined
-            ? lesson.note
-            : `Pas encore de note`}</Text>}
+          {<Text style={{ ...styles.Lesson__note, color: foreground }}>{
+            lesson.note !== undefined
+              ? `${lesson.note} / 100`
+              : `Pas encore de note`}</Text>}
         </View>
         <View style={{ display: !this.state.open ? `none` : `flex` }}>
           <Picker
@@ -48,11 +61,26 @@ class Lesson extends Component {
             itemStyle={{ color: foreground }}
             style={{ marginBottom: 20 }}
           >
-            {this.renderPicker()}
+            {this.renderPickers()}
           </Picker>
+        </View>
+        <View style={{ ...styles.Lesson__submit, display: !this.state.open ? `none` : `flex` }}>
           <Button
-            onPress={this.onSubmit}
-            title={lesson.note === undefined ? `Ajouter votre note` : `Modifier votre note`}
+            onPress={() => {
+              this.onSubmit();
+              this.setState({ open: !this.state.open });
+            }}
+            title={lesson.note === undefined ? `Ajouter` : `Modifier`}
+            color={foreground}
+            accessibilityLabel="Ajouter une note"
+          />
+        </View>
+        <View style={{ ...styles.Lesson__submit, display: this.state.open ? `none` : `flex` }}>
+          <Button
+            onPress={() => {
+              this.setState({ open: !this.state.open });
+            }}
+            title={lesson.note === undefined ? `Ajouter` : `Modifier`}
             color={foreground}
             accessibilityLabel="Ajouter une note"
           />
@@ -98,6 +126,9 @@ const styles = StyleSheet.create({
   },
   Lesson__form__input: {
     padding: 5,
+  },
+  Lesson__submit: {
+    marginTop: 10,
   },
 });
 
