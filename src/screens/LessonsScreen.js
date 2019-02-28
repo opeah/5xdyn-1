@@ -40,18 +40,13 @@ class LessonsScreen extends React.Component {
   render() {
     const { Store } = this.props;
     return (
-      <SafeAreaView style={{
-        height: `100%`,
-        backgroundColor: `${Store.themeStyle.background}`,
-      }}>
+      <SafeAreaView style={{ height: `100%`, backgroundColor: `${Store.themeStyle.background}` }}>
         <Header title="Cours" />
-        <View style={{ height: `100%` }}>
-          <ScrollView style={{
-            ...styles.lessonsList,
-          }}>
+        <ScrollView style={styles.lessonsList}>
+          <View style={{ ...styles.lessonsList__container }}>
             {this.renderLessons()}
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -60,14 +55,16 @@ class LessonsScreen extends React.Component {
 const styles = StyleSheet.create({
   lessonsList: {
     padding: 20,
-    height: `100%`,
+    marginBottom: -40,
+  },
+  lessonsList__container: {
+    paddingBottom: 60,
   },
   lessonsItem: {
     marginBottom: 15,
     padding: 20,
     borderRadius: 5,
   },
-  lessonsItem__content: {},
   lessonItem__title: {
     fontSize: 20,
     fontWeight: `800`,
