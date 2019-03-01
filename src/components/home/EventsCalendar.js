@@ -11,6 +11,80 @@ class EventsCalendar extends Component {
     currentMonth: new Date().getMonth() + 1,
   };
 
+  renderYears = () => {
+    const { Store, events } = this.props;
+    const { currentYear } = this.state;
+
+    if (events !== null) {
+      if (events[currentYear] !== undefined) {
+        return Object
+          .keys(events)
+          .map(year => {
+            if (year.toString() === currentYear.toString()) {
+              return (
+                <View key={year}>
+                  <Text style={{ color: Store.themeStyle.foreground, ...styles.EventsCalendar__year }}>{year}</Text>
+                </View>
+              );
+            }
+          });
+      } else {
+        return (
+          <View>
+            <Text style={{
+              ...styles.EventsCalendar__year,
+              color: Store.themeStyle.foreground,
+            }}>{this.state.currentYear}</Text>
+            <Text style={{
+              ...styles.EventsCalendar__month,
+              color: Store.themeStyle.foreground,
+            }}>Aucun événements pour {currentYear}</Text>
+          </View>
+        );
+      }
+    } else {
+      return <Text>Aucun événements</Text>;
+    }
+  };
+
+  renderMonths = () => {
+    const { Store, events } = this.props;
+    const { currentYear, currentMonth } = this.state;
+
+    if (events !== null) {
+      if (events[currentYear][currentMonth] !== undefined) {
+        Object
+          .keys(events[currentYear])
+          .map((item, index) => {
+            if (item.toString() === currentMonth.toString()) {
+              return (
+                <View key={index}>
+                  <Text style={{ color: Store.themeStyle.foreground, ...styles.EventsCalendar__month }}>
+                    {events[currentYear][item.toString()].month}
+                  </Text>
+                </View>
+              );
+            }
+          });
+      } else {
+        return (
+          <View>
+            <Text style={{
+              ...styles.EventsCalendar__year,
+              color: Store.themeStyle.foreground,
+            }}>{this.state.currentYear}</Text>
+            <Text style={{
+              ...styles.EventsCalendar__month,
+              color: Store.themeStyle.foreground,
+            }}>Aucun événements pour {currentMonth}</Text>
+          </View>
+        );
+      }
+    } else {
+      return <Text>Aucun événements</Text>;
+    }
+  };
+
   renderEvents = () => {
     const { Store } = this.props;
     if (this.props.events !== null) {
@@ -110,6 +184,7 @@ class EventsCalendar extends Component {
   render() {
     return (
       <ScrollView style={styles.EventsCalendar}>
+        <View>{this.renderYears()}</View>
         <View style={styles.eventsList__container}>{this.renderEvents()}</View>
       </ScrollView>
     );
