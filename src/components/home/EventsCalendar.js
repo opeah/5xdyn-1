@@ -4,112 +4,108 @@ import PropTypes from 'prop-types';
 import Moment from 'moment';
 
 import { withAppContext } from '../../context/AppContext';
+import { config } from '../../locale/moment';
 
 class EventsCalendar extends Component {
   state = {
     currentYear: new Date().getFullYear(),
     currentMonth: new Date().getMonth() + 1,
+    months: [],
   };
 
+  componentDidMount() {
+    this.setState({ months: config.months });
+  }
+
   renderEvents = () => {
-    const { Store } = this.props;
-    if (this.props.events !== null) {
-      if (this.props.events[this.state.currentYear] !== undefined) {
-        return Object.keys(this.props.events)
-          .map((year, index) => {
+    const { Store, events } = this.props;
+    const { currentYear, currentMonth } = this.state;
+
+    if (events !== null) {
+      if (events[currentYear] !== undefined) {
+        if (events[currentYear][currentMonth] !== undefined) {
+          return events[currentYear][currentMonth].events.map(event => {
+            console.log(event);
+            const color = { color: `${Store.themeStyle.foreground}` };
+            const background = { backgroundColor: `${Store.themeStyle.eventsList.backgroundColor}` };
+            const day = Moment(event.start.date || event.start.dateTime)
+              .format(`DD`);
+            const month = Moment(event.start.date || event.start.dateTime)
+              .format(`MMM`);
+            const begin = Moment(event.start.date || event.start.dateTime)
+              .format(`HH:mm`);
+            const end = Moment(event.end.date || event.end.dateTime)
+              .format(`HH:mm`);
+            const first = Moment(event.start.date || event.start.dateTime)
+              .format(`DD`);
+            const last = Moment(event.end.date || event.end.dateTime)
+              .format(`DD`);
             return (
-              <View key={index}>
-                <View style={{
-                  display: this.state.currentYear.toString() === year.toString()
-                    ? `flex`
-                    : `none`,
-                }}>
-                  <Text style={{ color: Store.themeStyle.foreground, ...styles.EventsCalendar__year }}>{year}</Text>
+              <View key={event.id} style={{ ...styles.EventsCalendar__item, ...background }}>
+                <View style={{ ...styles.EventsCalendar__item__left }}>
+                  <Text style={{ ...styles.EventsCalendar__item__day, ...color }}>{day}</Text>
+                  <Text style={{ ...styles.EventsCalendar__item__month, ...color }}>{month}</Text>
                 </View>
-                <View>
-                  {Object.keys(this.props.events[year])
-                    .map((number, index) => {
-                      return (
-                        <View key={index} style={{
-                          display: this.state.currentMonth.toString() === (number).toString()
-                            ? `flex`
-                            : `none`,
-                        }}>
-                          <Text style={{ color: Store.themeStyle.foreground, ...styles.EventsCalendar__month }}>
-                            {this.props.events[this.state.currentYear][number.toString()] !==
-                            undefined
-                              ? this.props.events[this.state.currentYear][number.toString()].month
-                              : `${this.state.currentMonth}`}
-                          </Text>
-                        </View>
-                      );
-                    })}
-                </View>
-                <View style={{
-                  display: this.state.currentYear.toString() === year.toString()
-                    ? `flex`
-                    : `none`,
-                }}>
-                  {this.props.events[this.state.currentYear][this.state.currentMonth.toString()] ===
-                  undefined ? false : (
-                    this.props.events[this.state.currentYear][this.state.currentMonth.toString()].events.map(
-                      (event) => {
-                        const color = { color: `${Store.themeStyle.foreground}` };
-                        const background = { backgroundColor: `${Store.themeStyle.eventsList.backgroundColor}` };
-                        const day = Moment(event.start.date || event.start.dateTime)
-                          .format(`DD`);
-                        const month = Moment(event.start.date || event.start.dateTime)
-                          .format(`MMM`);
-                        const begin = Moment(event.start.date || event.start.dateTime)
-                          .format(`HH:mm`);
-                        const end = Moment(event.end.date || event.end.dateTime)
-                          .format(`HH:mm`);
-                        return (
-                          <View key={event.id} style={{ ...styles.eventsItem, ...background }}>
-                            <View style={{ ...styles.eventsItem__left }}>
-                              <Text style={{ ...styles.eventsItem__day, ...color }}>{day}</Text>
-                              <Text style={{ ...styles.eventsItem__month, ...color }}>{month}</Text>
-                            </View>
-                            <View style={{ ...styles.eventsItem__right }}>
-                              <Text style={{ ...styles.eventsItem__title, ...color }}>{event.summary}</Text>
-                              <View style={{ ...styles.eventsItem__hour }}>
-                                <Text style={{ ...styles.eventsItem__begin, ...color }}>
-                                  {begin === `00:00` ? `Toute la journée` : `${begin} -`}
-                                </Text>
-                                <Text style={{ ...styles.eventsItem__end, ...color }}>
-                                  {begin === `00:00` ? `` : ` ${end}`}
-                                </Text>
-                              </View>
-                            </View>
-                          </View>
-                        );
-                      })
-                  )}
+                <View style={{ ...styles.EventsCalendar__item__right }}>
+                  <Text style={{ ...styles.EventsCalendar__item__title, ...color }}>{event.summary}</Text>
+                  <View style={{ ...styles.EventsCalendar__item__hour }}>
+                    <Text style={{ ...styles.EventsCalendar__item__begin, ...color }}>
+                      {begin === `00:00` ? `Toute la journée` : `${begin} -`}
+                    </Text>
+                    <Text style={{ ...styles.EventsCalendar__item__end, ...color }}>
+                      {begin === `00:00` ? `` : ` ${end}`}
+                    </Text>
+                    <Text style={{ ...styles.EventsCalendar__item__begin, ...color }}>
+                      {first === last ? `` : ` - Jusqu'au ${last} ${month}`}
+                    </Text>
+                  </View>
                 </View>
               </View>
             );
           });
+        } else {
+          return (
+            <View>
+              <Text style={{ ...styles.EventsCalendar__error, color: Store.themeStyle.foreground }}>
+                Aucun événements pour {currentMonth}
+              </Text>
+            </View>
+          );
+        }
       } else {
         return (
           <View>
-            <Text style={{
-              ...styles.EventsCalendar__year,
-              color: Store.themeStyle.foreground,
-            }}>{this.state.currentYear}</Text>
-            <Text style={{
-              ...styles.EventsCalendar__month,
-              color: Store.themeStyle.foreground,
-            }}>Aucun événements</Text>
+            <Text style={{ ...styles.EventsCalendar__error, color: Store.themeStyle.foreground }}>
+              Aucun événements pour {currentYear}
+            </Text>
           </View>
         );
       }
-
+    } else {
+      return (
+        <View>
+          <Text style={{ ...styles.EventsCalendar__error, color: Store.themeStyle.foreground }}>
+            Aucun événements
+          </Text>
+        </View>
+      );
     }
   };
 
   render() {
+    const { Store } = this.props;
     return (
       <ScrollView style={styles.EventsCalendar}>
+        <View>
+          <Text style={{ color: Store.themeStyle.foreground, ...styles.EventsCalendar__year }}>
+            {this.state.currentYear}
+          </Text>
+        </View>
+        <View>
+          <Text style={{ color: Store.themeStyle.foreground, ...styles.EventsCalendar__month }}>
+            {this.state.months[this.state.currentMonth - 1]}
+          </Text>
+        </View>
         <View style={styles.eventsList__container}>{this.renderEvents()}</View>
       </ScrollView>
     );
@@ -136,40 +132,45 @@ const styles = StyleSheet.create({
     fontWeight: `700`,
     marginBottom: 20,
   },
-  eventsItem: {
+  EventsCalendar__error: {
+    textAlign: `center`,
+    fontSize: 20,
+    fontWeight: `800`,
+  },
+  EventsCalendar__item: {
     flex: 1,
     flexDirection: `row`,
     marginBottom: 15,
     padding: 20,
     borderRadius: 5,
   },
-  eventsItem__left: {
+  EventsCalendar__item__left: {
     width: `20%`,
   },
-  eventsItem__right: {
+  EventsCalendar__item__right: {
     width: `80%`,
   },
-  eventsItem__day: {
+  EventsCalendar__item__day: {
     fontSize: 20,
     fontWeight: `800`,
   },
-  eventsItem__month: {
+  EventsCalendar__item__month: {
     fontSize: 14,
     fontWeight: `500`,
   },
-  eventsItem__title: {
+  EventsCalendar__item__title: {
     fontSize: 16,
     fontWeight: `800`,
     marginBottom: 5,
   },
-  eventsItem__hour: {
+  EventsCalendar__item__hour: {
     flex: 1,
     flexDirection: `row`,
   },
-  eventsItem__begin: {
+  EventsCalendar__item__begin: {
     fontSize: 12,
   },
-  eventsItem__end: {
+  EventsCalendar__item__end: {
     fontSize: 12,
   },
 });
