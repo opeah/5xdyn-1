@@ -36,18 +36,18 @@ class EventsCalendar extends Component {
             const end = Moment(event.end.date || event.end.dateTime)
               .format(`HH:mm`);
             return (
-              <View key={event.id} style={{ ...styles.eventsItem, ...background }}>
-                <View style={{ ...styles.eventsItem__left }}>
-                  <Text style={{ ...styles.eventsItem__day, ...color }}>{day}</Text>
-                  <Text style={{ ...styles.eventsItem__month, ...color }}>{month}</Text>
+              <View key={event.id} style={{ ...styles.EventsCalendar__item, ...background }}>
+                <View style={{ ...styles.EventsCalendar__item__left }}>
+                  <Text style={{ ...styles.EventsCalendar__item__day, ...color }}>{day}</Text>
+                  <Text style={{ ...styles.EventsCalendar__item__month, ...color }}>{month}</Text>
                 </View>
-                <View style={{ ...styles.eventsItem__right }}>
-                  <Text style={{ ...styles.eventsItem__title, ...color }}>{event.summary}</Text>
-                  <View style={{ ...styles.eventsItem__hour }}>
-                    <Text style={{ ...styles.eventsItem__begin, ...color }}>
+                <View style={{ ...styles.EventsCalendar__item__right }}>
+                  <Text style={{ ...styles.EventsCalendar__item__title, ...color }}>{event.summary}</Text>
+                  <View style={{ ...styles.EventsCalendar__item__hour }}>
+                    <Text style={{ ...styles.EventsCalendar__item__begin, ...color }}>
                       {begin === `00:00` ? `Toute la journée` : `${begin} -`}
                     </Text>
-                    <Text style={{ ...styles.eventsItem__end, ...color }}>
+                    <Text style={{ ...styles.EventsCalendar__item__end, ...color }}>
                       {begin === `00:00` ? `` : ` ${end}`}
                     </Text>
                   </View>
@@ -129,40 +129,40 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: `800`,
   },
-  eventsItem: {
+  EventsCalendar__item: {
     flex: 1,
     flexDirection: `row`,
     marginBottom: 15,
     padding: 20,
     borderRadius: 5,
   },
-  eventsItem__left: {
+  EventsCalendar__item__left: {
     width: `20%`,
   },
-  eventsItem__right: {
+  EventsCalendar__item__right: {
     width: `80%`,
   },
-  eventsItem__day: {
+  EventsCalendar__item__day: {
     fontSize: 20,
     fontWeight: `800`,
   },
-  eventsItem__month: {
+  EventsCalendar__item__month: {
     fontSize: 14,
     fontWeight: `500`,
   },
-  eventsItem__title: {
+  EventsCalendar__item__title: {
     fontSize: 16,
     fontWeight: `800`,
     marginBottom: 5,
   },
-  eventsItem__hour: {
+  EventsCalendar__item__hour: {
     flex: 1,
     flexDirection: `row`,
   },
-  eventsItem__begin: {
+  EventsCalendar__item__begin: {
     fontSize: 12,
   },
-  eventsItem__end: {
+  EventsCalendar__item__end: {
     fontSize: 12,
   },
 });
