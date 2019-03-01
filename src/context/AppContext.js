@@ -1,9 +1,15 @@
 import React, { Component, createContext } from 'react';
-
-import { storage } from '../storage/Storage';
+import { AsyncStorage } from 'react-native';
+import Storage from 'react-native-storage';
 import lessons from '../data/lessons';
 
 export const AppContext = createContext();
+
+const storage = new Storage({
+  size: 1000,
+  storageBackend: AsyncStorage,
+  enableCache: true,
+});
 
 export class Store extends Component {
   state = {
