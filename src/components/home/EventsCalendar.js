@@ -25,6 +25,7 @@ class EventsCalendar extends Component {
       if (events[currentYear] !== undefined) {
         if (events[currentYear][currentMonth] !== undefined) {
           return events[currentYear][currentMonth].events.map(event => {
+            console.log(event);
             const color = { color: `${Store.themeStyle.foreground}` };
             const background = { backgroundColor: `${Store.themeStyle.eventsList.backgroundColor}` };
             const day = Moment(event.start.date || event.start.dateTime)
@@ -35,6 +36,10 @@ class EventsCalendar extends Component {
               .format(`HH:mm`);
             const end = Moment(event.end.date || event.end.dateTime)
               .format(`HH:mm`);
+            const first = Moment(event.start.date || event.start.dateTime)
+              .format(`DD`);
+            const last = Moment(event.end.date || event.end.dateTime)
+              .format(`DD`);
             return (
               <View key={event.id} style={{ ...styles.EventsCalendar__item, ...background }}>
                 <View style={{ ...styles.EventsCalendar__item__left }}>
@@ -49,6 +54,9 @@ class EventsCalendar extends Component {
                     </Text>
                     <Text style={{ ...styles.EventsCalendar__item__end, ...color }}>
                       {begin === `00:00` ? `` : ` ${end}`}
+                    </Text>
+                    <Text style={{ ...styles.EventsCalendar__item__begin, ...color }}>
+                      {first === last ? `` : ` - Jusqu'au ${last} ${month}`}
                     </Text>
                   </View>
                 </View>

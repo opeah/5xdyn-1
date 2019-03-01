@@ -14,7 +14,7 @@ class EventsList extends Component {
           return (
             <View key={year}>
               <Text style={{
-                ...styles.eventsList__year,
+                ...styles.EventsList__year,
                 color: Store.themeStyle.foreground,
               }}>{year}</Text>
               {Object.keys(this.props.events[year])
@@ -22,7 +22,7 @@ class EventsList extends Component {
                   return (
                     <View key={index}>
                       <Text style={{
-                        ...styles.eventsList__month,
+                        ...styles.EventsList__month,
                         color: Store.themeStyle.foreground,
                       }}>{this.props.events[year][number].month}</Text>
                       {this.props.events[year][number].events.map(event => {
@@ -36,20 +36,27 @@ class EventsList extends Component {
                           .format(`HH:mm`);
                         const end = Moment(event.end.date || event.end.dateTime)
                           .format(`HH:mm`);
+                        const first = Moment(event.start.date || event.start.dateTime)
+                          .format(`DD`);
+                        const last = Moment(event.end.date || event.end.dateTime)
+                          .format(`DD`);
                         return (
-                          <View key={event.id} style={{ ...styles.eventsItem, ...background }}>
-                            <View style={{ ...styles.eventsItem__left }}>
-                              <Text style={{ ...styles.eventsItem__day, ...color }}>{day}</Text>
-                              <Text style={{ ...styles.eventsItem__month, ...color }}>{month}</Text>
+                          <View key={event.id} style={{ ...styles.EventsItem, ...background }}>
+                            <View style={{ ...styles.EventsItem__left }}>
+                              <Text style={{ ...styles.EventsItem__day, ...color }}>{day}</Text>
+                              <Text style={{ ...styles.EventsItem__month, ...color }}>{month}</Text>
                             </View>
-                            <View style={{ ...styles.eventsItem__right }}>
-                              <Text style={{ ...styles.eventsItem__title, ...color }}>{event.summary}</Text>
-                              <View style={{ ...styles.eventsItem__hour }}>
-                                <Text style={{ ...styles.eventsItem__begin, ...color }}>
+                            <View style={{ ...styles.EventsItem__right }}>
+                              <Text style={{ ...styles.EventsItem__title, ...color }}>{event.summary}</Text>
+                              <View style={{ ...styles.EventsItem__hour }}>
+                                <Text style={{ ...styles.EventsItem__begin, ...color }}>
                                   {begin === `00:00` ? `Toute la journée` : `${begin} -`}
                                 </Text>
-                                <Text style={{ ...styles.eventsItem__end, ...color }}>
+                                <Text style={{ ...styles.EventsItem__end, ...color }}>
                                   {begin === `00:00` ? `` : ` ${end}`}
+                                </Text>
+                                <Text style={{ ...styles.EventsItem__begin, ...color }}>
+                                  {first === last ? `` : ` - Jusqu'au ${last} ${month}`}
                                 </Text>
                               </View>
                             </View>
@@ -67,8 +74,8 @@ class EventsList extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.eventsList}>
-        <View style={styles.eventsList__container}>
+      <ScrollView style={styles.EventsList}>
+        <View style={styles.EventsList__container}>
           {this.renderEvents()}
         </View>
       </ScrollView>
@@ -77,57 +84,57 @@ class EventsList extends Component {
 }
 
 const styles = StyleSheet.create({
-  eventsList: {
+  EventsList: {
     padding: 20,
   },
-  eventsList__container: {
+  EventsList__container: {
     paddingBottom: 30,
     marginBottom: 50,
   },
-  eventsList__year: {
+  EventsList__year: {
     fontSize: 20,
     fontWeight: `800`,
   },
-  eventsList__month: {
+  EventsList__month: {
     fontSize: 16,
     fontWeight: `800`,
     marginBottom: 10,
     marginTop: 10,
   },
-  eventsItem: {
+  EventsItem: {
     flex: 1,
     flexDirection: `row`,
     marginBottom: 15,
     padding: 20,
     borderRadius: 5,
   },
-  eventsItem__left: {
+  EventsItem__left: {
     width: `20%`,
   },
-  eventsItem__right: {
+  EventsItem__right: {
     width: `80%`,
   },
-  eventsItem__day: {
+  EventsItem__day: {
     fontSize: 20,
     fontWeight: `800`,
   },
-  eventsItem__month: {
+  EventsItem__month: {
     fontSize: 14,
     fontWeight: `500`,
   },
-  eventsItem__title: {
+  EventsItem__title: {
     fontSize: 16,
     fontWeight: `800`,
     marginBottom: 5,
   },
-  eventsItem__hour: {
+  EventsItem__hour: {
     flex: 1,
     flexDirection: `row`,
   },
-  eventsItem__begin: {
+  EventsItem__begin: {
     fontSize: 12,
   },
-  eventsItem__end: {
+  EventsItem__end: {
     fontSize: 12,
   },
 });
