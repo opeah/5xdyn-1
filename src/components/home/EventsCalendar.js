@@ -25,7 +25,6 @@ class EventsCalendar extends Component {
       if (events[currentYear] !== undefined) {
         if (events[currentYear][currentMonth] !== undefined) {
           return events[currentYear][currentMonth].events.map(event => {
-            console.log(event);
             const color = { color: `${Store.themeStyle.foreground}` };
             const background = { backgroundColor: `${Store.themeStyle.eventsList.backgroundColor}` };
             const day = Moment(event.start.date || event.start.dateTime)
