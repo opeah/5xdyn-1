@@ -45,7 +45,7 @@ class LessonsScreen extends Component {
     });
     if (notes.length > 0) {
       const sum = notes.reduce((item, a) => item + a);
-      const average = sum / (notes.length);
+      const average = Math.floor(sum / (notes.length));
       this.setState({ average });
     } else {
       this.setState({ average: null });

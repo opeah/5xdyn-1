@@ -8,16 +8,12 @@ class Lesson extends Component {
   state = { note: 0, pickers: [], open: false };
 
   componentDidMount() {
+    this.createPickers();
     if (this.props.lesson.note !== undefined) {
       this.setState({ note: this.props.lesson.note });
     } else {
       this.setState({ note: 0 });
     }
-    let pickers = [];
-    for (let i = 0; i <= 100; i++) {
-      pickers.push(<Picker.Item key={i} label={`${i}`} value={i} />);
-    }
-    this.setState({ pickers: [...pickers] });
   }
 
   componentDidUpdate(prevProps) {
@@ -31,10 +27,21 @@ class Lesson extends Component {
         this.setState({ note: 0 });
       }
     }
+    if (prevProps.Store.darkMode !== this.props.Store.darkMode) {
+      this.createPickers();
+    }
   }
 
   onSubmit = () => {
     this.props.Store.addNoteToLesson(this.props.id, this.state.note);
+  };
+
+  createPickers = () => {
+    let pickers = [];
+    for (let i = 0; i <= 100; i++) {
+      pickers.push(<Picker.Item key={i} label={`${i}`} value={i} />);
+    }
+    this.setState({ pickers });
   };
 
   renderPickers = () => {
