@@ -82,7 +82,7 @@ class Lesson extends Component {
             }}
             title={lesson.note === undefined ? `Ajouter` : `Modifier`}
             color={foreground}
-            accessibilityLabel="Ajouter une note"
+            accessibilityLabel="Ajouter ou modifier une note"
           />
         </View>
         <View style={{ ...styles.Lesson__submit, display: this.state.open ? `none` : `flex` }}>
