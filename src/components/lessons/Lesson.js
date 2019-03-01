@@ -8,7 +8,6 @@ class Lesson extends Component {
   state = { note: 0, pickers: [], open: false };
 
   componentDidMount() {
-    console.log(this.props.lesson.note);
     if (this.props.lesson.note !== undefined) {
       this.setState({ note: this.props.lesson.note });
     } else {
@@ -23,9 +22,13 @@ class Lesson extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.lesson.note !== this.props.lesson.note) {
-      console.log(this.props.lesson.note);
       if (this.props.lesson.note !== undefined) {
         this.setState({ note: this.props.lesson.note });
+      }
+    }
+    if (prevProps.Store.currentYear !== this.props.Store.currentYear) {
+      if (this.props.lesson.note === undefined) {
+        this.setState({ note: 0 });
       }
     }
   }

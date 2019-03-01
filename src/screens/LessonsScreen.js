@@ -38,14 +38,18 @@ class LessonsScreen extends Component {
   calculateAverage = () => {
     const { Store } = this.props;
     const notes = [];
-    Store.lessons[Store.currentYear].map((lesson, index) => {
+    Store.lessons[Store.currentYear].map(lesson => {
       if (lesson.note !== undefined) {
         notes.push(lesson.note);
       }
     });
-    const sum = notes.reduce((item, a) => item + a);
-    const average = sum / (notes.length);
-    this.setState({ average });
+    if (notes.length > 0) {
+      const sum = notes.reduce((item, a) => item + a);
+      const average = sum / (notes.length);
+      this.setState({ average });
+    } else {
+      this.setState({ average: null });
+    }
   };
 
   render() {
