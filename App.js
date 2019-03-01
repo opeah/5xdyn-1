@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Moment from 'moment';
 
-import Menu from './src/components/layout/Navigation';
+import Navigation from './src/components/layout/Navigation';
 import { Store } from './src/context/AppContext';
 import { config } from './src/locale/moment';
 
@@ -11,7 +11,7 @@ class App extends Component {
   render() {
     return (
       <Store>
-        <Menu />
+        <Navigation />
       </Store>
     );
   }
