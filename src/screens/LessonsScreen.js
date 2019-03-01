@@ -64,7 +64,9 @@ class LessonsScreen extends Component {
               ...styles.Lessons__average__text,
               color: `${Store.themeStyle.foreground}`,
             }}>
-              {this.state.average !== null ? `Moyenne : ${this.state.average}` : `Entrez une note`}
+              {this.state.average !== null
+                ? `Moyenne : ${this.state.average} %`
+                : `Entrez une note`}
             </Text>
           </View>
           <View style={{ ...styles.lessonsList__container }}>
