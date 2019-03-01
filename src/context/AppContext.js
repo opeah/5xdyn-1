@@ -9,6 +9,7 @@ const storage = new Storage({
   size: 1000,
   storageBackend: AsyncStorage,
   enableCache: true,
+  defaultExpires: null,
 });
 
 export class Store extends Component {
