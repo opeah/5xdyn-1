@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-navigation';
 import { withAppContext } from '../context/AppContext';
 import Header from '../components/layout/Header';
 import lessons from '../data/lessons';
+import Lesson from "../components/lessons/Lessons";
 
 class LessonsScreen extends React.Component {
   state = {

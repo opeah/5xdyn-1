@@ -1,6 +1,7 @@
 import React, { Component, createContext } from 'react';
 
 import { storage } from '../storage/Storage';
+import lessons from '../data/lessons';
 
 export const AppContext = createContext();
 
